@@ -30,8 +30,6 @@
     <ProjectReference Include="..\Fox.TaskFlow.Application\Fox.TaskFlow.Application.csproj" />
     <ProjectReference Include="..\Fox.TaskFlow.Domain\Fox.TaskFlow.Domain.csproj" />
     <ProjectReference Include="..\Fox.TaskFlow.Infrastructure\Fox.TaskFlow.Infrastructure.csproj" />
-    <ProjectReference Include="..\..\..\Fox.ConfigKit\src\Fox.ConfigKit\Fox.ConfigKit.csproj" />
-    <ProjectReference Include="..\..\..\Fox.ConfigKit\src\Fox.ConfigKit.ResultKit\Fox.ConfigKit.ResultKit.csproj" />
   </ItemGroup>
 
 </Project>
