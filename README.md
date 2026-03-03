@@ -604,7 +604,7 @@ Fox.TaskFlow follows strict coding standards:
 
 ## 📝License
 
-This project is licensed
+This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details.
 
 ## 👤Author
 
@@ -625,4 +625,4 @@ This project is licensed
 
 ## 📞Support
 
-For issues, questions
+For issues, questions, or feature requests, please open an issue in the [GitHub repository](https://github.com/akikari/Fox.TaskFlow/issues).
