@@ -6,6 +6,29 @@
 
 A comprehensive demonstration application showcasing the complete **Fox.\*Kit** ecosystem with Clean Architecture, SOLID principles, and modern .NET 10 practices.
 
+## 📑 Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [Architecture](#architecture)
+- [Technologies](#technologies)
+- [Workflow System (ChainKit Integration)](#workflow-system-chainkit-integration)
+- [Advanced Filtering (OptionKit Integration)](#advanced-filtering-optionkit-integration)
+- [Webhook Notifications (RetryKit Integration)](#webhook-notifications-retrykit-integration)
+- [Validation Rules](#validation-rules)
+- [Localization Architecture](#localization-architecture)
+- [Getting Started](#getting-started)
+- [Project Structure](#project-structure)
+- [API Endpoints](#api-endpoints)
+- [Configuration](#configuration)
+- [Testing](#testing)
+- [Code Quality](#code-quality)
+- [Contributing](#contributing)
+- [License](#license)
+- [Author](#author)
+- [Related Projects](#related-projects)
+- [Support](#support)
+
 ## 📋 Overview
 
 Fox.TaskFlow is an enterprise-grade task management system built to demonstrate real-world integration of **seven Fox.\*Kit packages**. The application follows Clean Architecture with a service layer pattern, implementing workflow-based state transitions using the Chain of Responsibility pattern through **Fox.ChainKit**.
