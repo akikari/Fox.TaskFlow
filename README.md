@@ -85,13 +85,13 @@ Presentation (API, Blazor UI)
 
 | Package | Version | Usage |
 |---------|---------|-------|
-| **Fox.ResultKit** | 1.3.0 | `Result<T>` for error handling, Match pattern |
-| **Fox.ValidationKit.ResultKit** | 1.0.0 | Fluent validation with fail-fast cascading |
-| **Fox.MapKit** | 1.0.0 * | Compile-time object mapping `[MapProfile]` |
-| **Fox.OptionKit** | 1.0.0 | Optional values with JSON converter |
-| **Fox.ChainKit** | 1.0.1 | Chain of Responsibility pattern for workflows |
-| **Fox.ConfigKit.ResultKit** | 1.0.4 | Type-safe configuration validation |
-| **Fox.RetryKit** | 1.0.0 | Automatic retry with exponential backoff |
+| **[Fox.ResultKit](https://github.com/akikari/Fox.ResultKit)** | 1.3.0 | `Result<T>` for error handling, Match pattern |
+| **[Fox.ValidationKit.ResultKit](https://github.com/akikari/Fox.ValidationKit)** | 1.0.0 | Fluent validation with fail-fast cascading |
+| **[Fox.MapKit](https://github.com/akikari/Fox.MapKit)** | 1.0.0 * | Compile-time object mapping `[MapProfile]` |
+| **[Fox.OptionKit](https://github.com/akikari/Fox.OptionKit)** | 1.0.0 | Optional values with JSON converter |
+| **[Fox.ChainKit](https://github.com/akikari/Fox.ChainKit)** | 1.0.1 | Chain of Responsibility pattern for workflows |
+| **[Fox.ConfigKit.ResultKit](https://github.com/akikari/Fox.ConfigKit)** | 1.0.4 | Type-safe configuration validation |
+| **[Fox.RetryKit](https://github.com/akikari/Fox.RetryKit)** | 1.0.0 | Automatic retry with exponential backoff |
 
 **\* Fox.MapKit is not yet publicly available**. This project includes the runtime library (`libs/Fox.MapKit.dll`) as a direct assembly reference instead of a NuGet package. The mapping profile classes serve documentation purposes only; actual mapping is provided by the Fox.MapKit runtime.
 
