@@ -61,7 +61,7 @@ Fox.TaskFlow is an enterprise-grade task management system
 - 📖 **Full Documentation**: XML comments on all types, properties, and methods (including private)
 - 🎨 **Code Structure**: Organized regions (Constants → Fields → Constructors → Properties → Methods)
 
-## 🏗️Architecture
+## 🏗️ Architecture
 
 ### Clean Architecture Layers
 
@@ -195,7 +195,7 @@ RetryPolicy.Retry(configuration.MaxRetries, TimeSpan.FromMilliseconds(configurat
 - 📊 Retry attempt logging for observability
 - 🛡️ Never breaks the ChainKit pipeline (always returns `HandlerResult.Continue`)
 
-## ✔️Validation Rules
+## ✔️ Validation Rules
 
 ### CreateTaskRequest / UpdateTaskRequest
 - **Title**: Required, 3-200 characters
@@ -447,7 +447,7 @@ HTTP/1.1 400 Bad Request
 }
 ```
 
-## ⚙️Configuration
+## ⚙️ Configuration
 
 ### API (appsettings.json)
 
@@ -615,7 +615,7 @@ This project is licensed
 
 ## 🔗Related Projects
 
-- [Fox.ResultKit]
+- [Fox.ResultKit](https://github.com/akikari/Fox.ResultKit) - Lightweight Result pattern library for Railway Oriented Programming
 - [Fox.ValidationKit.ResultKit](https://www.nuget.org/packages/Fox.ValidationKit.ResultKit) - Fluent validation with Result pattern
 - [Fox.MapKit](https://github.com/akikari/Fox.MapKit) - Compile-time object mapping library
 - [Fox.OptionKit](https://github.com/akikari/Fox.OptionKit) - Optional types for explicit value absence
