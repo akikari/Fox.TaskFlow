@@ -29,9 +29,9 @@ A comprehensive demonstration application showcasing the complete **Fox.\*Kit** 
 - [Related Projects](#related-projects)
 - [Support](#support)
 
-## 📋 Overview
+## 📋Overview
 
-Fox.TaskFlow is an enterprise-grade task management system built to demonstrate real-world integration of **seven Fox.\*Kit packages**. The application follows Clean Architecture with a service layer pattern, implementing workflow-based state transitions using the Chain of Responsibility pattern through **Fox.ChainKit**.
+Fox.TaskFlow is an enterprise-grade task management system
 
 ### 🎯 Purpose
 
@@ -40,7 +40,7 @@ Fox.TaskFlow is an enterprise-grade task management system built to demonstrate 
 - **Educational**: Well-documented codebase with XML documentation on every type, property, and method
 - **Real-World Patterns**: Chain of Responsibility, Repository, Railway-Oriented Programming, Optional Types
 
-## ✨ Features
+## ✨Features
 
 ### Core Functionality
 - ✅ **Task Management**: Full CRUD operations with validation
@@ -61,7 +61,7 @@ Fox.TaskFlow is an enterprise-grade task management system built to demonstrate 
 - 📖 **Full Documentation**: XML comments on all types, properties, and methods (including private)
 - 🎨 **Code Structure**: Organized regions (Constants → Fields → Constructors → Properties → Methods)
 
-## 🏗️ Architecture
+## 🏗️Architecture
 
 ### Clean Architecture Layers
 
@@ -96,7 +96,7 @@ Presentation (API, Blazor UI)
 6. **Resilient HTTP**: Fox.RetryKit with exponential backoff for webhook notifications
 7. **Type-Safe Validation**: `ValidationMessageKeys` constants prevent typos in message keys
 
-## 🧰 Technologies
+## 🧰Technologies
 
 ### Core Stack
 - **.NET 10.0** with C# 14.0
@@ -124,7 +124,7 @@ Presentation (API, Blazor UI)
 - **Microsoft.Extensions.Localization** - Standard .NET localization
 - **System.Text.Json** - JSON serialization with custom converters
 
-## 🔄 Workflow System (ChainKit Integration)
+## 🔄Workflow System (ChainKit Integration)
 
 ### Task Status States
 
@@ -151,9 +151,9 @@ ValidateTransitionHandler → ExecuteTransitionHandler → WebhookNotificationHa
 
 **Key Benefit**: New handlers can be added without modifying existing code (Open/Closed Principle)
 
-## 🔍 Advanced Filtering (OptionKit Integration)
+## 🔍Advanced Filtering (OptionKit Integration)
 
-The application demonstrates **Fox.OptionKit** for optional filter parameters:
+The application demonstrates **Fox.OptionKit**
 
 ```csharp
 public sealed class GetTasksRequest
@@ -173,9 +173,9 @@ public sealed class GetTasksRequest
 - ✅ **No NullReferenceException**: Pattern matching eliminates null checks
 - ✅ **Functional Programming**: Railway-oriented style with explicit branching
 
-## 🔔 Webhook Notifications (RetryKit Integration)
+## 🔔Webhook Notifications (RetryKit Integration)
 
-**WebhookNotificationService** uses Fox.RetryKit for resilient HTTP calls:
+**WebhookNotificationService** uses Fox.RetryKit
 
 ```csharp
 RetryPolicy.Retry(configuration.MaxRetries, TimeSpan.FromMilliseconds(configuration.RetryDelayMs))
@@ -195,7 +195,7 @@ RetryPolicy.Retry(configuration.MaxRetries, TimeSpan.FromMilliseconds(configurat
 - 📊 Retry attempt logging for observability
 - 🛡️ Never breaks the ChainKit pipeline (always returns `HandlerResult.Continue`)
 
-## ✔️ Validation Rules
+## ✔️Validation Rules
 
 ### CreateTaskRequest / UpdateTaskRequest
 - **Title**: Required, 3-200 characters
@@ -211,7 +211,7 @@ All validation messages:
 - ✅ Field-specific (e.g., "Title is required" not "Validation failed")
 - ✅ Parameterized (e.g., "Title must be at least {0} characters" with actual value)
 
-## 🌍 Localization Architecture
+## 🌍Localization Architecture
 
 ### Server-Side Flow
 
@@ -228,7 +228,7 @@ All validation messages:
 - **Simplified Client**: No translation dictionaries or error code mapping
 - **Maintainable**: Add new languages by creating `.resx` files
 
-## 🚀 Getting Started
+## 🚀Getting Started
 
 ### Prerequisites
 
@@ -297,7 +297,7 @@ dotnet run
 4. Click **"Apply Filters"**
 5. Observe filtered results with total count
 
-## 📂 Project Structure
+## 📂Project Structure
 
 ```
 Fox.TaskFlow/
@@ -381,7 +381,7 @@ Fox.TaskFlow/
             └── ValidatorTests.cs         # Validation tests
 ```
 
-## 🌐 API Endpoints
+## 🌐API Endpoints
 
 ### Tasks Resource
 
@@ -447,7 +447,7 @@ HTTP/1.1 400 Bad Request
 }
 ```
 
-## ⚙️ Configuration
+## ⚙️Configuration
 
 ### API (appsettings.json)
 
@@ -485,7 +485,7 @@ HTTP/1.1 400 Bad Request
 }
 ```
 
-## 🧪 Testing
+## 🧪Testing
 
 ### Test Framework
 
@@ -516,7 +516,7 @@ dotnet test --logger "console;verbosity=detailed"
 dotnet test --filter "FullyQualifiedName~TaskServiceFilterTests"
 ```
 
-## 📚 Code Quality
+## 📚Code Quality
 
 ### SOLID Principles ✅
 
@@ -543,9 +543,9 @@ dotnet test --filter "FullyQualifiedName~TaskServiceFilterTests"
 - ✅ **Consistent Formatting**: 4-space indentation, CRLF line endings, 100-char line limit
 - ✅ **Region Organization**: Constants → Fields → Constructors → Properties → Methods
 
-## 🤝 Contributing
+## 🤝Contributing
 
-Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for detailed guidelines.
+Contributions are welcome!
 
 ### What We Welcome
 
@@ -602,20 +602,20 @@ Fox.TaskFlow follows strict coding standards:
 4. Ensure all tests pass (`dotnet test`)
 5. Submit a pull request
 
-## 📝 License
+## 📝License
 
-This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details.
+This project is licensed
 
-## 👤 Author
+## 👤Author
 
 **Károly Akácz**
 
 - GitHub: [@akikari](https://github.com/akikari)
 - Repository: [Fox.TaskFlow](https://github.com/akikari/Fox.TaskFlow)
 
-## 🔗 Related Projects
+## 🔗Related Projects
 
-- [Fox.ResultKit](https://github.com/akikari/Fox.ResultKit) - Lightweight Result pattern library for Railway Oriented Programming
+- [Fox.ResultKit]
 - [Fox.ValidationKit.ResultKit](https://www.nuget.org/packages/Fox.ValidationKit.ResultKit) - Fluent validation with Result pattern
 - [Fox.MapKit](https://github.com/akikari/Fox.MapKit) - Compile-time object mapping library
 - [Fox.OptionKit](https://github.com/akikari/Fox.OptionKit) - Optional types for explicit value absence
@@ -623,6 +623,6 @@ This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.t
 - [Fox.ConfigKit](https://github.com/akikari/Fox.ConfigKit) - Configuration validation at startup
 - [Fox.RetryKit](https://github.com/akikari/Fox.RetryKit) - Automatic retry with exponential backoff
 
-## 📞 Support
+## 📞Support
 
-For issues, questions, or feature requests, please open an issue in the [GitHub repository](https://github.com/akikari/Fox.TaskFlow/issues).
+For issues, questions
