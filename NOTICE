@@ -1,0 +1,215 @@
+NOTICE
+======
+
+Fox.TaskFlow
+Copyright (c) 2025 akikari
+
+This product includes software developed by akikari (https://github.com/akikari).
+
+================================================================================
+
+THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
+
+This project incorporates components from the projects listed below. The original
+copyright notices and licenses under which akikari received such components are set
+forth below. akikari reserves all rights not expressly granted herein.
+
+================================================================================
+
+1. Microsoft .NET Runtime and Libraries
+   https://github.com/dotnet/runtime
+
+   The MIT License (MIT)
+   Copyright (c) .NET Foundation and Contributors
+
+   Permission is hereby granted, free of charge, to any person obtaining a copy
+   of this software and associated documentation files (the "Software"), to deal
+   in the Software without restriction, including without limitation the rights
+   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+   copies of the Software, and to permit persons to whom the Software is
+   furnished to do so, subject to the following conditions:
+
+   The above copyright notice and this permission notice shall be included in all
+   copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+   SOFTWARE.
+
+================================================================================
+
+2. Microsoft ASP.NET Core
+   https://github.com/dotnet/aspnetcore
+
+   The MIT License (MIT)
+   Copyright (c) .NET Foundation and Contributors
+
+   [Same MIT License text as above]
+
+================================================================================
+
+3. Microsoft Entity Framework Core
+   https://github.com/dotnet/efcore
+
+   The MIT License (MIT)
+   Copyright (c) .NET Foundation and Contributors
+
+   [Same MIT License text as above]
+
+================================================================================
+
+4. Fox.ResultKit
+   https://github.com/akikari/Fox.ResultKit
+
+   The MIT License (MIT)
+   Copyright (c) 2025 akikari
+
+   [Same MIT License text as above]
+
+================================================================================
+
+5. Fox.ValidationKit.ResultKit
+   https://github.com/akikari/Fox.ValidationKit
+
+   The MIT License (MIT)
+   Copyright (c) 2025 akikari
+
+   [Same MIT License text as above]
+
+================================================================================
+
+6. Fox.MapKit
+   https://github.com/akikari/Fox.MapKit
+
+   The MIT License (MIT)
+   Copyright (c) 2025 akikari
+
+   [Same MIT License text as above]
+
+================================================================================
+
+7. Fox.OptionKit
+   https://github.com/akikari/Fox.OptionKit
+
+   The MIT License (MIT)
+   Copyright (c) 2025 akikari
+
+   [Same MIT License text as above]
+
+================================================================================
+
+8. Fox.ChainKit
+   https://github.com/akikari/Fox.ChainKit
+
+   The MIT License (MIT)
+   Copyright (c) 2025 akikari
+
+   [Same MIT License text as above]
+
+================================================================================
+
+9. Fox.ConfigKit
+   https://github.com/akikari/Fox.ConfigKit
+
+   The MIT License (MIT)
+   Copyright (c) 2025 akikari
+
+   [Same MIT License text as above]
+
+================================================================================
+
+10. Fox.RetryKit
+    https://github.com/akikari/Fox.RetryKit
+
+    The MIT License (MIT)
+    Copyright (c) 2025 akikari
+
+    [Same MIT License text as above]
+
+================================================================================
+
+11. xUnit.net
+    https://github.com/xunit/xunit
+
+    Apache License, Version 2.0
+    Copyright (c) .NET Foundation and Contributors
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+================================================================================
+
+12. FluentAssertions
+    https://github.com/fluentassertions/fluentassertions
+
+    Apache License, Version 2.0
+    Copyright (c) FluentAssertions Contributors
+
+    [Same Apache License text as above]
+
+================================================================================
+
+13. SQLite
+    https://www.sqlite.org/
+
+    SQLite is in the Public Domain.
+
+    All of the code and documentation in SQLite has been dedicated to the public
+    domain by the authors. All code authors, and representatives of the companies
+    they work for, have signed affidavits dedicating their contributions to the
+    public domain and originals of those signed affidavits are stored in a
+    firesafe at the main offices of Hwaci. Anyone is free to copy, modify,
+    publish, use, compile, sell, or distribute the original SQLite code, either
+    in source code form or as a compiled binary, for any purpose, commercial or
+    non-commercial, and by any means.
+
+================================================================================
+
+DESIGN PATTERNS AND DOCUMENTATION STANDARDS
+
+This project uses design patterns and documentation standards that are freely
+available for use:
+
+- Clean Architecture (Robert C. Martin)
+- SOLID Principles (Robert C. Martin)
+- Railway-Oriented Programming (Scott Wlaschin)
+- Conventional Commits (conventionalcommits.org) - CC BY 3.0
+- Keep a Changelog (keepachangelog.com) - CC BY 3.0
+- Semantic Versioning (semver.org) - CC BY 3.0
+
+================================================================================
+
+DISCLAIMER
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
+FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
+DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
+OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+================================================================================
+
+For a complete list of dependencies and their licenses, see the CREDITS file.
+
+For questions about licensing, please open an issue at:
+https://github.com/akikari/Fox.TaskFlow/issues
+
+Last Updated: 2025-03-02

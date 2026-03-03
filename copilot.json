@@ -1,0 +1,68 @@
+{
+    "style":
+    {
+        "lineEndings": "CRLF",
+        "indentation": "spaces",
+        "indentSize": 4,
+        "useFileScopedNamespaces": true,
+        "preferExpressionBodiedMembers": true,
+        "useVar": "whenObvious",
+        "maxLineLength": 100,
+        "blankLineAfterClosingBrace": true,
+        "noLineWrapping": true
+    },
+
+    "csharp":
+    {
+        "nullable": "enable",
+        "languageVersion": "latest",
+        "preferAsyncSuffix": true,
+
+        "generateXmlDocComments": true,
+        "xmlCommentsLanguage": "hu",
+
+        "xmlDocDecorators":
+        {
+            "enabled": true,
+            "width": 98,
+            "widthMode": "fullLine",
+            "character": "=",
+            "prefix": "//",
+            "insertSpaceAfterPrefix": false,
+            "dynamicIndent": true
+        },
+
+        "suppressExplanatoryComments": true
+    },
+
+    "comments":
+    {
+        "avoidRedundantComments": true,
+        "avoidObviousComments": true,
+        "avoidMetaComments": true
+    },
+
+    "fileHeader":
+    {
+        "enabled": true,
+        "width": 98,
+        "widthMode": "fullLine",
+        "character": "=",
+        "prefix": "//",
+        "insertSpaceAfterPrefix": false,
+        "dynamicIndent": false,
+        "content":
+        [
+            "{summary}",
+            "",
+            "{date:yyyy.MM.dd.} XY"
+        ]
+    },
+
+    "tests":
+    {
+        "framework": "xunit",
+        "useFluentAssertions": true,
+        "namingConvention": "MethodName_Should_ExpectedBehavior"
+    }
+}

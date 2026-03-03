@@ -1,0 +1,290 @@
+@page "/tasks/{id:guid}"
+@rendermode InteractiveServer
+@inject TaskService TaskService
+@inject NavigationManager Navigation
+@using Fox.TaskFlow.Domain.Enums
+@using DomainTaskStatus = Fox.TaskFlow.Domain.Enums.TaskStatus
+
+<PageTitle>Task Details - Fox.TaskFlow</PageTitle>
+
+<div class="container">
+    <div class="header">
+        <h1>Task Details</h1>
+        <button class="btn btn-secondary" @onclick="NavigateBack">
+            ← Back to Tasks
+        </button>
+    </div>
+
+    @if (errorMessage != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @errorMessage
+        </div>
+    }
+
+    @if (task == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else
+    {
+        <div class="task-detail-card">
+            <div class="task-header">
+                <h2>@task.Title</h2>
+                <span class="task-status task-status-@task.Status.ToString().ToLower()">
+                    @task.Status
+                </span>
+            </div>
+
+            <div class="task-section">
+                <h3>Description</h3>
+                <p>@task.Description</p>
+            </div>
+
+            <div class="task-section">
+                <h3>Metadata</h3>
+                <div class="metadata-grid">
+                    <div class="metadata-item">
+                        <span class="metadata-label">Created:</span>
+                        <span>@task.CreatedAt.ToString("yyyy-MM-dd HH:mm")</span>
+                    </div>
+                    <div class="metadata-item">
+                        <span class="metadata-label">Updated:</span>
+                        <span>@task.UpdatedAt.ToString("yyyy-MM-dd HH:mm")</span>
+                    </div>
+                    @if (task.DueDate.HasValue)
+                    {
+                        <div class="metadata-item">
+                            <span class="metadata-label">Due Date:</span>
+                            <span>@task.DueDate.Value.ToString("yyyy-MM-dd")</span>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="task-section">
+                <h3>Workflow Transitions</h3>
+                <div class="workflow-actions">
+                    @if (task.Status == DomainTaskStatus.Created)
+                    {
+                        <button class="btn btn-workflow btn-inprogress" @onclick="() => TransitionTask(DomainTaskStatus.InProgress)">
+                            → Start Progress
+                        </button>
+                        <button class="btn btn-workflow btn-cancelled" @onclick="() => TransitionTask(DomainTaskStatus.Cancelled)">
+                            × Cancel Task
+                        </button>
+                    }
+                    else if (task.Status == DomainTaskStatus.InProgress)
+                    {
+                        <button class="btn btn-workflow btn-completed" @onclick="() => TransitionTask(DomainTaskStatus.Completed)">
+                            ✓ Complete Task
+                        </button>
+                        <button class="btn btn-workflow btn-created" @onclick="() => TransitionTask(DomainTaskStatus.Created)">
+                            ← Back to Created
+                        </button>
+                        <button class="btn btn-workflow btn-cancelled" @onclick="() => TransitionTask(DomainTaskStatus.Cancelled)">
+                            × Cancel Task
+                        </button>
+                    }
+                    else
+                    {
+                        <p class="workflow-message">Task is in final state (@task.Status)</p>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+
+    private TaskDto? task;
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadTask();
+    }
+
+    private async Task LoadTask()
+    {
+        try
+        {
+            task = await TaskService.GetTaskByIdAsync(Id);
+            errorMessage = null;
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Failed to load task: {ex.Message}";
+        }
+    }
+
+    private async System.Threading.Tasks.Task TransitionTask(Fox.TaskFlow.Domain.Enums.TaskStatus targetStatus)
+    {
+        try
+        {
+            await TaskService.TransitionTaskAsync(Id, targetStatus);
+            await LoadTask();
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Failed to transition task: {ex.Message}";
+        }
+    }
+
+    private void NavigateBack()
+    {
+        Navigation.NavigateTo("/tasks");
+    }
+}
+
+<style>
+    .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .task-detail-card {
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 2rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .task-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 2rem;
+    }
+
+    .task-header h2 {
+        margin: 0;
+        font-size: 1.75rem;
+    }
+
+    .task-status {
+        padding: 0.5rem 1rem;
+        border-radius: 16px;
+        font-size: 0.875rem;
+        font-weight: 600;
+    }
+
+    .task-status-created {
+        background: #e3f2fd;
+        color: #1976d2;
+    }
+
+    .task-status-inprogress {
+        background: #fff3e0;
+        color: #f57c00;
+    }
+
+    .task-status-completed {
+        background: #e8f5e9;
+        color: #388e3c;
+    }
+
+    .task-status-cancelled {
+        background: #fce4ec;
+        color: #c2185b;
+    }
+
+    .task-section {
+        margin-bottom: 2rem;
+    }
+
+    .task-section h3 {
+        font-size: 1.25rem;
+        margin-bottom: 1rem;
+        color: #333;
+    }
+
+    .metadata-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+    .metadata-item {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .metadata-label {
+        font-weight: 600;
+        color: #666;
+        font-size: 0.875rem;
+    }
+
+    .workflow-actions {
+        display: flex;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .workflow-message {
+        color: #666;
+        font-style: italic;
+    }
+
+    .btn {
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 500;
+        font-size: 1rem;
+    }
+
+    .btn-secondary {
+        background: #757575;
+        color: white;
+    }
+
+    .btn-workflow {
+        color: white;
+    }
+
+    .btn-inprogress {
+        background: #f57c00;
+    }
+
+    .btn-completed {
+        background: #388e3c;
+    }
+
+    .btn-cancelled {
+        background: #c2185b;
+    }
+
+    .btn-created {
+        background: #1976d2;
+    }
+
+    .alert {
+        padding: 1rem;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+    }
+
+    .alert-danger {
+        background: #ffebee;
+        color: #c62828;
+        border: 1px solid #ef9a9a;
+    }
+</style>

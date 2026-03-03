@@ -1,0 +1,175 @@
+CREDITS
+=======
+
+Fox.TaskFlow is built with the help of many open-source projects and the contributions
+of the developer community. This file acknowledges those projects and contributors.
+
+## Core Dependencies
+
+### Microsoft .NET
+- **Project**: .NET Runtime, ASP.NET Core, Entity Framework Core, Blazor
+- **Website**: https://dotnet.microsoft.com/
+- **License**: MIT License
+- **Usage**: Core framework, web APIs, database access, UI framework
+
+### Fox.*Kit Packages
+All Fox.*Kit packages are developed and maintained by akikari.
+
+#### Fox.ResultKit (v1.3.0)
+- **GitHub**: https://github.com/akikari/Fox.ResultKit
+- **NuGet**: https://www.nuget.org/packages/Fox.ResultKit
+- **License**: MIT License
+- **Usage**: Railway-Oriented Programming with Result<T> pattern
+
+#### Fox.ValidationKit.ResultKit (v1.0.0)
+- **GitHub**: https://github.com/akikari/Fox.ValidationKit
+- **NuGet**: https://www.nuget.org/packages/Fox.ValidationKit.ResultKit
+- **License**: MIT License
+- **Usage**: Fluent validation with fail-fast cascading and ResultKit integration
+
+#### Fox.MapKit (v1.0.0)
+- **GitHub**: https://github.com/akikari/Fox.MapKit
+- **NuGet**: https://www.nuget.org/packages/Fox.MapKit
+- **License**: MIT License
+- **Usage**: Compile-time object mapping with source generators
+
+#### Fox.OptionKit (v1.0.0)
+- **GitHub**: https://github.com/akikari/Fox.OptionKit
+- **NuGet**: https://www.nuget.org/packages/Fox.OptionKit
+- **License**: MIT License
+- **Usage**: Type-safe optional values with JSON serialization support
+
+#### Fox.ChainKit (v1.0.1)
+- **GitHub**: https://github.com/akikari/Fox.ChainKit
+- **NuGet**: https://www.nuget.org/packages/Fox.ChainKit
+- **License**: MIT License
+- **Usage**: Chain of Responsibility pattern for workflow pipelines
+
+#### Fox.ConfigKit (Latest)
+- **GitHub**: https://github.com/akikari/Fox.ConfigKit
+- **NuGet**: https://www.nuget.org/packages/Fox.ConfigKit
+- **License**: MIT License
+- **Usage**: Type-safe configuration validation at startup
+
+#### Fox.ConfigKit.ResultKit (Latest)
+- **GitHub**: https://github.com/akikari/Fox.ConfigKit
+- **NuGet**: https://www.nuget.org/packages/Fox.ConfigKit.ResultKit
+- **License**: MIT License
+- **Usage**: ConfigKit integration with ResultKit
+
+#### Fox.RetryKit (v1.0.0)
+- **GitHub**: https://github.com/akikari/Fox.RetryKit
+- **NuGet**: https://www.nuget.org/packages/Fox.RetryKit
+- **License**: MIT License
+- **Usage**: Automatic retry policies with exponential backoff
+
+## Testing Frameworks
+
+### xUnit.net (v3.1.4)
+- **Website**: https://xunit.net/
+- **GitHub**: https://github.com/xunit/xunit
+- **License**: Apache License 2.0
+- **Usage**: Unit testing framework
+
+### FluentAssertions (Latest)
+- **Website**: https://fluentassertions.com/
+- **GitHub**: https://github.com/fluentassertions/fluentassertions
+- **License**: Apache License 2.0
+- **Usage**: Fluent assertion library for readable tests
+
+## Database
+
+### Microsoft.EntityFrameworkCore.Sqlite (v10.0.3)
+- **GitHub**: https://github.com/dotnet/efcore
+- **NuGet**: https://www.nuget.org/packages/Microsoft.EntityFrameworkCore.Sqlite
+- **License**: MIT License
+- **Usage**: SQLite database provider for Entity Framework Core
+
+### SQLite
+- **Website**: https://www.sqlite.org/
+- **License**: Public Domain
+- **Usage**: Embedded relational database
+
+## Development Tools
+
+### Microsoft.Extensions.Localization (v10.0.0)
+- **GitHub**: https://github.com/dotnet/runtime
+- **NuGet**: https://www.nuget.org/packages/Microsoft.Extensions.Localization
+- **License**: MIT License
+- **Usage**: Server-side localization with resource files
+
+### Microsoft.Extensions.Logging.Abstractions (v10.0.0)
+- **GitHub**: https://github.com/dotnet/runtime
+- **NuGet**: https://www.nuget.org/packages/Microsoft.Extensions.Logging.Abstractions
+- **License**: MIT License
+- **Usage**: Logging infrastructure for handlers
+
+### System.Text.Json (v10.0.0)
+- **GitHub**: https://github.com/dotnet/runtime
+- **License**: MIT License
+- **Usage**: JSON serialization with custom converters
+
+## Documentation Standards
+
+### Keep a Changelog
+- **Website**: https://keepachangelog.com/
+- **License**: CC BY 3.0
+- **Usage**: CHANGELOG.md format
+
+### Conventional Commits
+- **Website**: https://www.conventionalcommits.org/
+- **License**: CC BY 3.0
+- **Usage**: Commit message conventions
+
+### Semantic Versioning
+- **Website**: https://semver.org/
+- **License**: CC BY 3.0
+- **Usage**: Version numbering scheme
+
+## Design Patterns and Principles
+
+### Clean Architecture
+- **Author**: Robert C. Martin (Uncle Bob)
+- **Book**: Clean Architecture: A Craftsman's Guide to Software Structure and Design
+- **Usage**: Architectural pattern for layer separation
+
+### Railway-Oriented Programming
+- **Author**: Scott Wlaschin
+- **Article**: https://fsharpforfunandprofit.com/rop/
+- **Usage**: Error handling with Result<T> pattern
+
+### SOLID Principles
+- **Author**: Robert C. Martin (Uncle Bob)
+- **Usage**: Object-oriented design principles
+
+## Contributors
+
+### Project Maintainer
+- **akikari** - https://github.com/akikari
+  - Original author and maintainer
+  - All Fox.*Kit packages development
+
+### Community Contributors
+Thank you to all contributors who have submitted issues, feature requests, and pull requests!
+
+(This section will be updated as contributions are received)
+
+## Special Thanks
+
+- **Microsoft** for the excellent .NET platform and developer tools
+- **The .NET Community** for continuous innovation and sharing of best practices
+- **All open-source contributors** whose work makes projects like this possible
+
+## License Information
+
+This project (Fox.TaskFlow) is licensed under the MIT License.
+See the LICENSE file in the root directory for full license text.
+
+All third-party dependencies are used in accordance with their respective licenses.
+
+---
+
+Last Updated: 2025-03-02
+
+For questions about licenses or attributions, please open an issue at:
+https://github.com/akikari/Fox.TaskFlow/issues

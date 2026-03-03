@@ -1,0 +1,1028 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Fox.MapKit</name>
+    </assembly>
+    <members>
+        <member name="T:Fox.MapKit.Extensions.PrismExtensions">
+            <summary>
+            Prism DI container extensions (requires Prism.Core package).
+            </summary>
+            <remarks>
+            Usage in Prism App.xaml.cs:
+            <code>
+            protected override void RegisterTypes(IContainerRegistry containerRegistry)
+            {
+                containerRegistry.AddFoxMapKit();
+            }
+            </code>
+            </remarks>
+        </member>
+        <member name="M:Fox.MapKit.Extensions.PrismExtensions.AddFoxMapKit(System.Object,System.Action{Fox.MapKit.MapKitOptions})">
+            <summary>
+            Registers Fox.MapKit with Prism container (IContainerRegistry).
+            </summary>
+            <param name="containerRegistry">Prism container registry (IContainerRegistry).</param>
+            <param name="configure">Optional configuration action for MapKit options.</param>
+            <remarks>
+            Requires Prism.Core NuGet package and IContainerRegistry interface.
+            </remarks>
+        </member>
+        <member name="T:Fox.MapKit.Extensions.QueryableExtensions">
+            <summary>
+            Extension methods for IQueryable projection support (EF Core).
+            </summary>
+        </member>
+        <member name="M:Fox.MapKit.Extensions.QueryableExtensions.ProjectTo``2(System.Linq.IQueryable{``0})">
+            <summary>
+            Projects IQueryable&lt;TSource&gt; to IQueryable&lt;TTarget&gt; using registered projection expression.
+            </summary>
+            <typeparam name="TSource">Source entity type.</typeparam>
+            <typeparam name="TTarget">Target DTO type.</typeparam>
+            <param name="source">Source queryable (e.g., DbSet&lt;TSource&gt;).</param>
+            <returns>Projected queryable that can be composed with LINQ operators.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when source is null.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when no projection is registered for TSource to TTarget.</exception>
+            <example>
+            <code>
+            var query = dbContext.Users
+                .Where(u => u.IsActive)
+                .ProjectTo&lt;UserDto&gt;()
+                .OrderBy(dto => dto.Name);
+            var results = await query.ToListAsync();
+            </code>
+            </example>
+        </member>
+        <member name="T:Fox.MapKit.Extensions.ServiceCollectionExtensions">
+            <summary>
+            ASP.NET Core dependency injection extensions.
+            </summary>
+        </member>
+        <member name="M:Fox.MapKit.Extensions.ServiceCollectionExtensions.AddFoxMapKit(Microsoft.Extensions.DependencyInjection.IServiceCollection,System.Action{Fox.MapKit.MapKitOptions})">
+            <summary>
+            Registers Fox.MapKit with dependency injection support.
+            </summary>
+            <param name="services">Service collection to register with.</param>
+            <param name="configure">Optional configuration action for MapKit options.</param>
+            <returns>The service collection for method chaining.</returns>
+        </member>
+        <member name="T:Fox.MapKit.IMapBuilder`2">
+            <summary>
+            Fluent builder for configuring a specific mapping.
+            </summary>
+            <typeparam name="TSource">Source type</typeparam>
+            <typeparam name="TTarget">Target type</typeparam>
+        </member>
+        <member name="M:Fox.MapKit.IMapBuilder`2.ExplicitOnly">
+            <summary>
+            Disables all implicit mappings. Only explicitly configured properties will be mapped.
+            </summary>
+        </member>
+        <member name="M:Fox.MapKit.IMapBuilder`2.Ignore``1(System.Linq.Expressions.Expression{System.Func{`1,``0}})">
+            <summary>
+            Ignores a specific target property.
+            </summary>
+            <typeparam name="TProp">Property type</typeparam>
+            <param name="targetProperty">Target property selector</param>
+        </member>
+        <member name="M:Fox.MapKit.IMapBuilder`2.IgnoreOnUpdate``1(System.Linq.Expressions.Expression{System.Func{`1,``0}})">
+            <summary>
+            Ignores a specific target property only during MapToExisting (update operations).
+            Property is still mapped during Map (create operations).
+            Useful for audit fields like CreatedAt, CreatedBy that should be set once on creation.
+            </summary>
+            <typeparam name="TProp">Property type</typeparam>
+            <param name="targetProperty">Target property selector</param>
+        </member>
+        <member name="M:Fox.MapKit.IMapBuilder`2.Include``1(System.Linq.Expressions.Expression{System.Func{`1,``0}})">
+            <summary>
+            Includes a specific property in explicit-only mode.
+            </summary>
+            <typeparam name="TProp">Property type</typeparam>
+            <param name="property">Property selector</param>
+        </member>
+        <member name="M:Fox.MapKit.IMapBuilder`2.Map``2(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`1,``1}},System.Action{`1,`0})">
+            <summary>
+            Maps a source property to a target property.
+            </summary>
+            <typeparam name="TSourceProp">Source property type</typeparam>
+            <typeparam name="TTargetProp">Target property type</typeparam>
+            <param name="sourceProperty">Source property selector</param>
+            <param name="targetProperty">Target property selector</param>
+            <param name="backward">Optional backward action for reverse mapping (types swapped: TTarget=src, TSource=dst)</param>
+        </member>
+        <member name="M:Fox.MapKit.IMapBuilder`2.Map``2(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`1,``1}},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Action{`1,`0})">
+            <summary>
+            Maps a source property to a target property with transformation.
+            </summary>
+            <typeparam name="TSourceProp">Source property type</typeparam>
+            <typeparam name="TTargetProp">Target property type</typeparam>
+            <param name="sourceProperty">Source property selector</param>
+            <param name="targetProperty">Target property selector</param>
+            <param name="transform">Transformation function</param>
+            <param name="backward">Optional backward action for reverse mapping (types swapped: TTarget=src, TSource=dst)</param>
+        </member>
+        <member name="M:Fox.MapKit.IMapBuilder`2.MapIf``2(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`1,``1}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Conditionally maps a property.
+            </summary>
+            <typeparam name="TSourceProp">Source property type</typeparam>
+            <typeparam name="TTargetProp">Target property type</typeparam>
+            <param name="sourceProperty">Source property selector</param>
+            <param name="targetProperty">Target property selector</param>
+            <param name="condition">Condition function</param>
+        </member>
+        <member name="M:Fox.MapKit.IMapBuilder`2.Default``1(System.Linq.Expressions.Expression{System.Func{`1,``0}},``0)">
+            <summary>
+            Sets a default value for a target property.
+            </summary>
+            <typeparam name="TProp">Property type</typeparam>
+            <param name="targetProperty">Target property selector</param>
+            <param name="defaultValue">Default value</param>
+        </member>
+        <member name="M:Fox.MapKit.IMapBuilder`2.Convert``1(System.Linq.Expressions.Expression{System.Func{`1,``0}},System.Linq.Expressions.Expression{System.Func{`0,Fox.MapKit.IMapContext,``0}},System.Action{`1,`0})">
+            <summary>
+            Applies custom conversion logic for a property.
+            </summary>
+            <typeparam name="TTargetProp">Target property type</typeparam>
+            <param name="targetProperty">Target property selector</param>
+            <param name="converter">Converter function (source, context) => value</param>
+            <param name="backward">Optional backward action for reverse mapping (types swapped: TTarget=src, TSource=dst)</param>
+        </member>
+        <member name="M:Fox.MapKit.IMapBuilder`2.ConstructWith(System.Linq.Expressions.Expression{System.Func{`0,Fox.MapKit.IMapContext,`1}})">
+            <summary>
+            Specifies custom constructor to use for target object creation. Useful for immutable types with constructor-based initialization.
+            </summary>
+            <param name="constructor">Constructor expression that creates the target object</param>
+            <example>
+            config.CreateMap&lt;TaskEntity, TaskItem&gt;()
+                .ConstructWith((src, ctx) => new TaskItem(src.Id, src.Title, src.Description, ctx.Convert&lt;DateTime?, Option&lt;DateTime&gt;&gt;(src.DueDate)));
+            </example>
+        </member>
+        <member name="M:Fox.MapKit.IMapBuilder`2.BeforeMap(System.Linq.Expressions.Expression{System.Action{`0,`1}})">
+            <summary>
+            Executes custom logic before mapping.
+            </summary>
+            <param name="action">Action to execute</param>
+        </member>
+        <member name="M:Fox.MapKit.IMapBuilder`2.AfterMap(System.Linq.Expressions.Expression{System.Action{`0,`1}})">
+            <summary>
+            Executes custom logic after mapping.
+            </summary>
+            <param name="action">Action to execute</param>
+        </member>
+        <member name="M:Fox.MapKit.IMapBuilder`2.Flatten``2(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`1,``1}})">
+            <summary>
+            Maps a nested source property path to a flat target property (Flatten).
+            </summary>
+            <typeparam name="TSourceProp">Source property type</typeparam>
+            <typeparam name="TTargetProp">Target property type</typeparam>
+            <param name="sourcePath">Nested source path (e.g., src => src.Customer.Name)</param>
+            <param name="targetProperty">Flat target property selector</param>
+        </member>
+        <member name="M:Fox.MapKit.IMapBuilder`2.Unflatten``2(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`1,``1}})">
+            <summary>
+            Maps a flat source property to a nested target property path (Unflatten).
+            </summary>
+            <typeparam name="TSourceProp">Source property type</typeparam>
+            <typeparam name="TTargetProp">Target property type</typeparam>
+            <param name="sourceProperty">Flat source property selector</param>
+            <param name="targetPath">Nested target path (e.g., dest => dest.Customer.Name)</param>
+        </member>
+        <member name="M:Fox.MapKit.IMapBuilder`2.Reversible">
+            <summary>
+            Enables automatic reverse mapping generation (TTarget -> TSource).
+            Implicit mappings, nested objects, collections, and flatten operations are reversed automatically.
+            Custom mappings (Map/Convert with expressions) require explicit backward parameter to be reversible.
+            </summary>
+            <remarks>
+            <para><strong>Auto-reverse support:</strong></para>
+            <list type="bullet">
+            <item>Implicit property mappings (same name, compatible type)</item>
+            <item>Nested object mappings (if reverse mapper exists)</item>
+            <item>Collection mappings (if element reverse mapper exists)</item>
+            <item>Flatten operations (automatically generate Unflatten)</item>
+            </list>
+            <para><strong>Requires backward parameter:</strong></para>
+            <list type="bullet">
+            <item>Custom Map() with expressions or transforms</item>
+            <item>Custom Convert() with converter functions</item>
+            <item>MapIf() conditional mappings</item>
+            </list>
+            <para><strong>Not reversible:</strong></para>
+            <list type="bullet">
+            <item>BeforeMap/AfterMap lifecycle hooks (blocks Reversible)</item>
+            <item>Custom mappings without backward parameter (FMK0014 error)</item>
+            </list>
+            </remarks>
+        </member>
+        <member name="T:Fox.MapKit.IMapConfig">
+            <summary>
+            Configuration interface for defining mappings.
+            </summary>
+        </member>
+        <member name="M:Fox.MapKit.IMapConfig.CreateMap``2">
+            <summary>
+            Creates a mapping between source and target types.
+            </summary>
+            <typeparam name="TSource">Source type</typeparam>
+            <typeparam name="TTarget">Target type</typeparam>
+            <returns>Mapping builder for fluent configuration</returns>
+        </member>
+        <member name="T:Fox.MapKit.IMapContext">
+            <summary>
+            Context provided to mapping operations for custom logic and state.
+            </summary>
+        </member>
+        <member name="P:Fox.MapKit.IMapContext.Items">
+            <summary>
+            Gets or sets custom state data.
+            </summary>
+        </member>
+        <member name="M:Fox.MapKit.IMapContext.TryResolve``1(System.String,``0@)">
+            <summary>
+            Resolves a custom value for a specific property.
+            </summary>
+            <typeparam name="T">Type of the value</typeparam>
+            <param name="key">Property key</param>
+            <param name="value">Resolved value</param>
+            <returns>True if value was resolved</returns>
+        </member>
+        <member name="T:Fox.MapKit.IMapperRegistry">
+            <summary>
+            Mapper registry interface for dependency injection support.
+            </summary>
+        </member>
+        <member name="M:Fox.MapKit.IMapperRegistry.GetMapper``2">
+            <summary>
+            Gets mapper function for specified source and target types.
+            </summary>
+            <typeparam name="TSource">Source type.</typeparam>
+            <typeparam name="TTarget">Target type.</typeparam>
+            <returns>Mapper function if registered, otherwise null.</returns>
+        </member>
+        <member name="M:Fox.MapKit.IMapperRegistry.SetMapper``2(System.Func{``0,``1},System.Collections.Generic.IReadOnlyList{System.ValueTuple{System.Type,System.Type}})">
+            <summary>
+            Registers mapper function with optional nested dependencies.
+            </summary>
+            <typeparam name="TSource">Source type.</typeparam>
+            <typeparam name="TTarget">Target type.</typeparam>
+            <param name="mapper">Mapper function to register.</param>
+            <param name="dependencies">Optional list of nested mapper dependencies.</param>
+        </member>
+        <member name="M:Fox.MapKit.IMapperRegistry.GetExistingMapper``2">
+            <summary>
+            Gets existing mapper function that updates target in-place.
+            </summary>
+            <typeparam name="TSource">Source type.</typeparam>
+            <typeparam name="TTarget">Target type.</typeparam>
+            <returns>Existing mapper function if registered, otherwise null.</returns>
+        </member>
+        <member name="M:Fox.MapKit.IMapperRegistry.HasMapper``2">
+            <summary>
+            Checks if mapper is registered for specified source and target types.
+            </summary>
+            <typeparam name="TSource">Source type.</typeparam>
+            <typeparam name="TTarget">Target type.</typeparam>
+            <returns>True if mapper is registered, otherwise false.</returns>
+        </member>
+        <member name="M:Fox.MapKit.IMapperRegistry.Clear">
+            <summary>
+            Clears all registered mappers (useful for testing).
+            </summary>
+        </member>
+        <member name="T:Fox.MapKit.Internal.DefaultMapContext">
+            <summary>
+            Default implementation of IMapContext.
+            </summary>
+        </member>
+        <member name="P:Fox.MapKit.Internal.DefaultMapContext.Items">
+            <summary>
+            Gets custom state data dictionary.
+            </summary>
+        </member>
+        <member name="M:Fox.MapKit.Internal.DefaultMapContext.Convert``2(``0)">
+            <summary>
+            Converts a value using registered type converter.
+            </summary>
+        </member>
+        <member name="M:Fox.MapKit.Internal.DefaultMapContext.TryResolve``1(System.String,``0@)">
+            <summary>
+            Resolves a custom value for a specific property.
+            </summary>
+        </member>
+        <member name="T:Fox.MapKit.Internal.DefaultMapperRegistry">
+            <summary>
+            Default thread-safe mapper registry implementation.
+            </summary>
+        </member>
+        <member name="M:Fox.MapKit.Internal.DefaultMapperRegistry.GetMapper``2">
+            <summary>
+            Gets mapper function for specified source and target types.
+            </summary>
+            <typeparam name="TSource">Source type.</typeparam>
+            <typeparam name="TTarget">Target type.</typeparam>
+            <returns>Mapper function if registered, otherwise null.</returns>
+        </member>
+        <member name="M:Fox.MapKit.Internal.DefaultMapperRegistry.SetMapper``2(System.Func{``0,``1},System.Collections.Generic.IReadOnlyList{System.ValueTuple{System.Type,System.Type}})">
+            <summary>
+            Registers mapper function with optional nested dependencies.
+            </summary>
+            <typeparam name="TSource">Source type.</typeparam>
+            <typeparam name="TTarget">Target type.</typeparam>
+            <param name="mapper">Mapper function to register.</param>
+            <param name="deps">Optional list of nested mapper dependencies.</param>
+        </member>
+        <member name="M:Fox.MapKit.Internal.DefaultMapperRegistry.SetExistingMapper``2(System.Func{``0,``1,``1})">
+            <summary>
+            Registers existing mapper function that updates target in-place.
+            </summary>
+            <typeparam name="TSource">Source type.</typeparam>
+            <typeparam name="TTarget">Target type.</typeparam>
+            <param name="mapper">Existing mapper function to register.</param>
+        </member>
+        <member name="M:Fox.MapKit.Internal.DefaultMapperRegistry.GetExistingMapper``2">
+            <summary>
+            Gets existing mapper function for specified source and target types.
+            </summary>
+            <typeparam name="TSource">Source type.</typeparam>
+            <typeparam name="TTarget">Target type.</typeparam>
+            <returns>Existing mapper function if registered, otherwise null.</returns>
+        </member>
+        <member name="M:Fox.MapKit.Internal.DefaultMapperRegistry.HasMapper``2">
+            <summary>
+            Checks if mapper is registered for specified source and target types.
+            </summary>
+            <typeparam name="TSource">Source type.</typeparam>
+            <typeparam name="TTarget">Target type.</typeparam>
+            <returns>True if mapper is registered, otherwise false.</returns>
+        </member>
+        <member name="M:Fox.MapKit.Internal.DefaultMapperRegistry.Clear">
+            <summary>
+            Clears all registered mappers (useful for testing).
+            </summary>
+        </member>
+        <member name="T:Fox.MapKit.Internal.MapBuilder`2">
+            <summary>
+            Internal implementation of IMapBuilder used only at compile-time by the source generator.
+            This class is never instantiated at runtime.
+            </summary>
+        </member>
+        <member name="M:Fox.MapKit.Internal.MapBuilder`2.ExplicitOnly">
+            <summary>
+            Disables all implicit mappings. Only explicitly configured properties will be mapped.
+            </summary>
+            <returns>This builder instance for fluent chaining.</returns>
+        </member>
+        <member name="M:Fox.MapKit.Internal.MapBuilder`2.Ignore``1(System.Linq.Expressions.Expression{System.Func{`1,``0}})">
+            <summary>
+            Ignores a specific target property.
+            </summary>
+            <typeparam name="TProp">Property type.</typeparam>
+            <param name="targetProperty">Target property selector.</param>
+            <returns>This builder instance for fluent chaining.</returns>
+        </member>
+        <member name="M:Fox.MapKit.Internal.MapBuilder`2.IgnoreOnUpdate``1(System.Linq.Expressions.Expression{System.Func{`1,``0}})">
+            <summary>
+            Ignores a specific target property only during MapToExisting (update operations).
+            Property is still mapped during Map (create operations).
+            Useful for audit fields like CreatedAt, CreatedBy that should be set once on creation.
+            </summary>
+            <typeparam name="TProp">Property type.</typeparam>
+            <param name="targetProperty">Target property selector.</param>
+            <returns>This builder instance for fluent chaining.</returns>
+        </member>
+        <member name="M:Fox.MapKit.Internal.MapBuilder`2.Include``1(System.Linq.Expressions.Expression{System.Func{`1,``0}})">
+            <summary>
+            Includes a specific property in explicit-only mode.
+            </summary>
+            <typeparam name="TProp">Property type.</typeparam>
+            <param name="property">Property selector.</param>
+            <returns>This builder instance for fluent chaining.</returns>
+        </member>
+        <member name="M:Fox.MapKit.Internal.MapBuilder`2.Map``2(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`1,``1}},System.Action{`1,`0})">
+            <summary>
+            Maps a source property to a target property.
+            </summary>
+            <typeparam name="TSourceProp">Source property type.</typeparam>
+            <typeparam name="TTargetProp">Target property type.</typeparam>
+            <param name="sourceProperty">Source property selector.</param>
+            <param name="targetProperty">Target property selector.</param>
+            <param name="backward">Optional backward action for reverse mapping.</param>
+            <returns>This builder instance for fluent chaining.</returns>
+        </member>
+        <member name="M:Fox.MapKit.Internal.MapBuilder`2.Map``2(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`1,``1}},System.Linq.Expressions.Expression{System.Func{``0,``1}},System.Action{`1,`0})">
+            <summary>
+            Maps a source property to a target property with transformation.
+            </summary>
+            <typeparam name="TSourceProp">Source property type.</typeparam>
+            <typeparam name="TTargetProp">Target property type.</typeparam>
+            <param name="sourceProperty">Source property selector.</param>
+            <param name="targetProperty">Target property selector.</param>
+            <param name="transform">Transformation function.</param>
+            <param name="backward">Optional backward action for reverse mapping.</param>
+            <returns>This builder instance for fluent chaining.</returns>
+        </member>
+        <member name="M:Fox.MapKit.Internal.MapBuilder`2.MapIf``2(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`1,``1}},System.Linq.Expressions.Expression{System.Func{`0,System.Boolean}})">
+            <summary>
+            Conditionally maps a property.
+            </summary>
+            <typeparam name="TSourceProp">Source property type.</typeparam>
+            <typeparam name="TTargetProp">Target property type.</typeparam>
+            <param name="sourceProperty">Source property selector.</param>
+            <param name="targetProperty">Target property selector.</param>
+            <param name="condition">Condition function.</param>
+            <returns>This builder instance for fluent chaining.</returns>
+        </member>
+        <member name="M:Fox.MapKit.Internal.MapBuilder`2.Default``1(System.Linq.Expressions.Expression{System.Func{`1,``0}},``0)">
+            <summary>
+            Sets a default value for a target property.
+            </summary>
+            <typeparam name="TProp">Property type.</typeparam>
+            <param name="targetProperty">Target property selector.</param>
+            <param name="defaultValue">Default value.</param>
+            <returns>This builder instance for fluent chaining.</returns>
+        </member>
+        <member name="M:Fox.MapKit.Internal.MapBuilder`2.Convert``1(System.Linq.Expressions.Expression{System.Func{`1,``0}},System.Linq.Expressions.Expression{System.Func{`0,Fox.MapKit.IMapContext,``0}},System.Action{`1,`0})">
+            <summary>
+            Applies custom conversion logic for a property.
+            </summary>
+            <typeparam name="TTargetProp">Target property type.</typeparam>
+            <param name="targetProperty">Target property selector.</param>
+            <param name="converter">Converter function.</param>
+            <param name="backward">Optional backward action for reverse mapping.</param>
+            <returns>This builder instance for fluent chaining.</returns>
+        </member>
+        <member name="M:Fox.MapKit.Internal.MapBuilder`2.ConstructWith(System.Linq.Expressions.Expression{System.Func{`0,Fox.MapKit.IMapContext,`1}})">
+            <summary>
+            Specifies custom constructor to use for target object creation.
+            </summary>
+            <param name="constructor">Constructor expression that creates the target object.</param>
+            <returns>This builder instance for fluent chaining.</returns>
+        </member>
+        <member name="M:Fox.MapKit.Internal.MapBuilder`2.BeforeMap(System.Linq.Expressions.Expression{System.Action{`0,`1}})">
+            <summary>
+            Executes custom logic before mapping.
+            </summary>
+            <param name="action">Action to execute.</param>
+            <returns>This builder instance for fluent chaining.</returns>
+        </member>
+        <member name="M:Fox.MapKit.Internal.MapBuilder`2.AfterMap(System.Linq.Expressions.Expression{System.Action{`0,`1}})">
+            <summary>
+            Executes custom logic after mapping.
+            </summary>
+            <param name="action">Action to execute.</param>
+            <returns>This builder instance for fluent chaining.</returns>
+        </member>
+        <member name="M:Fox.MapKit.Internal.MapBuilder`2.Flatten``2(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`1,``1}})">
+            <summary>
+            Maps a nested source property path to a flat target property.
+            </summary>
+            <typeparam name="TSourceProp">Source property type.</typeparam>
+            <typeparam name="TTargetProp">Target property type.</typeparam>
+            <param name="sourcePath">Nested source path.</param>
+            <param name="targetProperty">Flat target property selector.</param>
+            <returns>This builder instance for fluent chaining.</returns>
+        </member>
+        <member name="M:Fox.MapKit.Internal.MapBuilder`2.Unflatten``2(System.Linq.Expressions.Expression{System.Func{`0,``0}},System.Linq.Expressions.Expression{System.Func{`1,``1}})">
+            <summary>
+            Maps a flat source property to a nested target property path.
+            </summary>
+            <typeparam name="TSourceProp">Source property type.</typeparam>
+            <typeparam name="TTargetProp">Target property type.</typeparam>
+            <param name="sourceProperty">Flat source property selector.</param>
+            <param name="targetPath">Nested target path.</param>
+            <returns>This builder instance for fluent chaining.</returns>
+        </member>
+        <member name="M:Fox.MapKit.Internal.MapBuilder`2.Reversible">
+            <summary>
+            Enables automatic reverse mapping generation.
+            </summary>
+        </member>
+        <member name="T:Fox.MapKit.Internal.MapConfig">
+            <summary>
+            Internal implementation of IMapConfig used only at compile-time by the source generator.
+            This class is never instantiated at runtime.
+            </summary>
+        </member>
+        <member name="M:Fox.MapKit.Internal.MapConfig.CreateMap``2">
+            <summary>
+            Creates a mapping between source and target types.
+            </summary>
+            <typeparam name="TSource">Source type.</typeparam>
+            <typeparam name="TTarget">Target type.</typeparam>
+            <returns>Mapping builder for fluent configuration.</returns>
+        </member>
+        <member name="T:Fox.MapKit.Internal.MapperRegistry">
+            <summary>
+            Global registry of all registered mappings for validation purposes.
+            </summary>
+        </member>
+        <member name="T:Fox.MapKit.Internal.MapperRegistry.MappingEntry">
+            <summary>
+            Internal record representing a registered mapping entry with validation callback and nested dependencies.
+            </summary>
+            <param name="Source">Source type of the mapping.</param>
+            <param name="Target">Target type of the mapping.</param>
+            <param name="IsMapperAvailable">Function to check if mapper is available at runtime.</param>
+            <param name="NestedDependencies">Collection of nested mapper dependencies (source and target types).</param>
+        </member>
+        <member name="M:Fox.MapKit.Internal.MapperRegistry.MappingEntry.#ctor(System.Type,System.Type,System.Func{System.Boolean},System.Collections.Generic.IReadOnlyList{System.ValueTuple{System.Type,System.Type}})">
+            <summary>
+            Internal record representing a registered mapping entry with validation callback and nested dependencies.
+            </summary>
+            <param name="Source">Source type of the mapping.</param>
+            <param name="Target">Target type of the mapping.</param>
+            <param name="IsMapperAvailable">Function to check if mapper is available at runtime.</param>
+            <param name="NestedDependencies">Collection of nested mapper dependencies (source and target types).</param>
+        </member>
+        <member name="P:Fox.MapKit.Internal.MapperRegistry.MappingEntry.Source">
+            <summary>Source type of the mapping.</summary>
+        </member>
+        <member name="P:Fox.MapKit.Internal.MapperRegistry.MappingEntry.Target">
+            <summary>Target type of the mapping.</summary>
+        </member>
+        <member name="P:Fox.MapKit.Internal.MapperRegistry.MappingEntry.IsMapperAvailable">
+            <summary>Function to check if mapper is available at runtime.</summary>
+        </member>
+        <member name="P:Fox.MapKit.Internal.MapperRegistry.MappingEntry.NestedDependencies">
+            <summary>Collection of nested mapper dependencies (source and target types).</summary>
+        </member>
+        <member name="F:Fox.MapKit.Internal.MapperRegistry.registeredMappings">
+            <summary>
+            Thread-safe dictionary of registered mappings keyed by (source type, target type) tuple.
+            Used for O(1) lookup performance during validation.
+            </summary>
+        </member>
+        <member name="M:Fox.MapKit.Internal.MapperRegistry.RegisterMapping(System.Type,System.Type,System.Func{System.Boolean},System.Collections.Generic.IReadOnlyList{System.ValueTuple{System.Type,System.Type}})">
+            <summary>
+            Registers a mapping between source and target types with validation callback.
+            </summary>
+            <param name="sourceType">Source type of the mapping.</param>
+            <param name="targetType">Target type of the mapping.</param>
+            <param name="isMapperAvailable">Function to check if mapper is available at runtime.</param>
+            <param name="nestedDependencies">Optional collection of nested mapper dependencies.</param>
+        </member>
+        <member name="M:Fox.MapKit.Internal.MapperRegistry.GetAllRegisteredMappings">
+            <summary>
+            Gets all registered mappings for validation.
+            </summary>
+            <returns>
+            Collection of tuples containing source type, target type, availability status, and nested dependencies for each registered mapping.
+            </returns>
+        </member>
+        <member name="M:Fox.MapKit.Internal.MapperRegistry.IsRegistered(System.Type,System.Type)">
+            <summary>
+            Checks if a mapping is registered.
+            </summary>
+            <param name="sourceType">Source type of the mapping.</param>
+            <param name="targetType">Target type of the mapping.</param>
+            <returns>True if the mapping is registered; otherwise, false.</returns>
+        </member>
+        <member name="M:Fox.MapKit.Internal.MapperRegistry.Clear">
+            <summary>
+            Clears all registered mappings (useful for testing).
+            </summary>
+        </member>
+        <member name="T:Fox.MapKit.ITypeConverter`2">
+            <summary>
+            Defines a custom type converter for mapping between incompatible property types.
+            </summary>
+            <typeparam name="TSource">Source type to convert from.</typeparam>
+            <typeparam name="TTarget">Target type to convert to.</typeparam>
+        </member>
+        <member name="M:Fox.MapKit.ITypeConverter`2.Convert(`0,Fox.MapKit.IMapContext)">
+            <summary>
+            Converts a source value to the target type.
+            </summary>
+            <param name="source">Source value to convert.</param>
+            <param name="context">Mapping context for accessing custom state.</param>
+            <returns>Converted target value.</returns>
+        </member>
+        <member name="T:Fox.MapKit.MapContext">
+            <summary>
+            Default implementation of IMapContext.
+            </summary>
+        </member>
+        <member name="P:Fox.MapKit.MapContext.Items">
+            <summary>
+            Gets or sets custom state data.
+            </summary>
+        </member>
+        <member name="M:Fox.MapKit.MapContext.TryResolve``1(System.String,``0@)">
+            <summary>
+            Resolves a custom value for a specific property.
+            </summary>
+        </member>
+        <member name="T:Fox.MapKit.MapContextExtensions">
+            <summary>
+            Extension methods for IMapContext.
+            </summary>
+        </member>
+        <member name="M:Fox.MapKit.MapContextExtensions.Convert``2(Fox.MapKit.IMapContext,``0)">
+            <summary>
+            Converts a value using registered type converter.
+            </summary>
+            <typeparam name="TSource">Source type</typeparam>
+            <typeparam name="TTarget">Target type</typeparam>
+            <param name="context">Map context</param>
+            <param name="value">Value to convert</param>
+            <returns>Converted value</returns>
+            <exception cref="T:System.InvalidOperationException">Thrown when no converter is registered for the type pair</exception>
+        </member>
+        <member name="T:Fox.MapKit.MapKitGlobalRegistry">
+            <summary>
+            Helper for setting global mapper registry across all MapperCache instances.
+            </summary>
+        </member>
+        <member name="M:Fox.MapKit.MapKitGlobalRegistry.SetGlobalRegistry(Fox.MapKit.IMapperRegistry)">
+            <summary>
+            Sets global registry provider for all existing and future MapperCache instances.
+            </summary>
+            <param name="registry">Mapper registry to use globally.</param>
+        </member>
+        <member name="P:Fox.MapKit.MapKitGlobalRegistry.GlobalRegistryProvider">
+            <summary>
+            Gets the current global registry provider.
+            </summary>
+        </member>
+        <member name="T:Fox.MapKit.MapKitOptions">
+            <summary>
+            Configuration options for Fox.MapKit.
+            </summary>
+        </member>
+        <member name="P:Fox.MapKit.MapKitOptions.EnableValidation">
+            <summary>
+            Enables mapper validation at startup (checks for missing nested mappers).
+            </summary>
+        </member>
+        <member name="P:Fox.MapKit.MapKitOptions.EnableProjections">
+            <summary>
+            Enables IQueryable projection support.
+            </summary>
+        </member>
+        <member name="P:Fox.MapKit.MapKitOptions.CustomRegistry">
+            <summary>
+            Custom mapper registry implementation (defaults to DefaultMapperRegistry).
+            </summary>
+        </member>
+        <member name="T:Fox.MapKit.Mapper">
+            <summary>
+            Main entry point for compile-time mapping operations.
+            </summary>
+        </member>
+        <member name="M:Fox.MapKit.Mapper.Map``2(``0)">
+            <summary>
+            Maps a source object to a target type using compile-time generated mapper.
+            </summary>
+            <typeparam name="TSource">Source type</typeparam>
+            <typeparam name="TTarget">Target type</typeparam>
+            <param name="source">Source object to map from</param>
+            <returns>Mapped target object</returns>
+        </member>
+        <member name="M:Fox.MapKit.Mapper.Map``2(System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Maps a collection of source objects to a list of target objects.
+            </summary>
+            <typeparam name="TSource">Source element type</typeparam>
+            <typeparam name="TTarget">Target element type</typeparam>
+            <param name="source">Source collection</param>
+            <returns>List of mapped target objects</returns>
+        </member>
+        <member name="M:Fox.MapKit.Mapper.MapToExisting``2(``0,``1)">
+            <summary>
+            Maps properties from source to existing target instance.
+            Updates target object in-place instead of creating new instance.
+            </summary>
+            <typeparam name="TSource">Source type to map from.</typeparam>
+            <typeparam name="TTarget">Target type to map to (must be reference type).</typeparam>
+            <param name="source">Source object to map from.</param>
+            <param name="target">Existing target object to update.</param>
+            <returns>Updated target object (same reference).</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when source or target is null.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when no mapping is defined for the type pair.</exception>
+        </member>
+        <member name="M:Fox.MapKit.Mapper.ValidateAllMappings">
+            <summary>
+            Validates all registered mappings at runtime.
+            </summary>
+            <returns>Validation result containing any errors found</returns>
+        </member>
+        <member name="M:Fox.MapKit.Mapper.CreateNoMappingException``2">
+            <summary>
+            Creates exception for when no mapping is defined.
+            </summary>
+            <typeparam name="TSource">Source type.</typeparam>
+            <typeparam name="TTarget">Target type.</typeparam>
+            <returns>InvalidOperationException with detailed error message.</returns>
+        </member>
+        <member name="T:Fox.MapKit.MapperCache`2">
+            <summary>
+            Internal cache for mapper functions with dependency injection support.
+            </summary>
+        </member>
+        <member name="F:Fox.MapKit.MapperCache`2.staticMapper">
+            <summary>
+            Internal storage for the static mapper function delegate.
+            Null if no mapper has been registered for this source/target pair.
+            </summary>
+        </member>
+        <member name="F:Fox.MapKit.MapperCache`2.staticContextMapper">
+            <summary>
+            Internal storage for the static context-aware mapper function delegate.
+            Used when mapping requires IMapContext (type converters, custom constructors).
+            </summary>
+        </member>
+        <member name="F:Fox.MapKit.MapperCache`2.staticExistingMapper">
+            <summary>
+            Internal storage for the static existing mapper function delegate.
+            Updates existing target instance instead of creating new instance.
+            </summary>
+        </member>
+        <member name="F:Fox.MapKit.MapperCache`2.staticContextExistingMapper">
+            <summary>
+            Internal storage for the static context-aware existing mapper function delegate.
+            Updates existing target instance with IMapContext support.
+            </summary>
+        </member>
+        <member name="F:Fox.MapKit.MapperCache`2.registryProvider">
+            <summary>
+            Optional DI registry provider for dependency injection scenarios.
+            When set, GetMapper() prioritizes this registry over static cache.
+            </summary>
+        </member>
+        <member name="M:Fox.MapKit.MapperCache`2.SetRegistryProvider(Fox.MapKit.IMapperRegistry)">
+            <summary>
+            Sets global DI registry provider for this source/target pair.
+            </summary>
+            <param name="provider">Mapper registry provider to use, or null for static cache.</param>
+        </member>
+        <member name="M:Fox.MapKit.MapperCache`2.SetMapper(System.Func{`0,`1},System.Collections.Generic.IReadOnlyList{System.ValueTuple{System.Type,System.Type}})">
+            <summary>
+            Sets the mapper function for this source/target pair.
+            Routes to DI registry if available; otherwise uses static cache.
+            </summary>
+            <param name="mapperFunc">Mapper function to register.</param>
+            <param name="nestedDependencies">Optional list of nested mapper dependencies.</param>
+        </member>
+        <member name="M:Fox.MapKit.MapperCache`2.SetMapper(System.Func{`0,Fox.MapKit.IMapContext,`1},System.Collections.Generic.IReadOnlyList{System.ValueTuple{System.Type,System.Type}})">
+            <summary>
+            Sets the context-aware mapper function for this source/target pair.
+            Used when mapping requires IMapContext (type converters, custom constructors).
+            </summary>
+            <param name="mapperFunc">Context-aware mapper function to register.</param>
+            <param name="nestedDependencies">Optional list of nested mapper dependencies.</param>
+        </member>
+        <member name="M:Fox.MapKit.MapperCache`2.SetExistingMapper(System.Func{`0,`1,`1})">
+            <summary>
+            Sets the existing mapper function for this source/target pair.
+            Updates existing target instance instead of creating new instance.
+            </summary>
+            <param name="mapperFunc">Existing mapper function to register.</param>
+        </member>
+        <member name="M:Fox.MapKit.MapperCache`2.SetExistingMapper(System.Func{`0,`1,Fox.MapKit.IMapContext,`1})">
+            <summary>
+            Sets the context-aware existing mapper function for this source/target pair.
+            Updates existing target instance with IMapContext support.
+            </summary>
+            <param name="mapperFunc">Context-aware existing mapper function to register.</param>
+        </member>
+        <member name="M:Fox.MapKit.MapperCache`2.GetMapper">
+            <summary>
+            Gets the mapper function from DI registry or static cache.
+            </summary>
+        </member>
+        <member name="M:Fox.MapKit.MapperCache`2.GetExistingMapper">
+            <summary>
+            Gets the existing mapper function from static cache.
+            Returns function that updates existing target instance instead of creating new one.
+            </summary>
+        </member>
+        <member name="T:Fox.MapKit.MapperExtensions">
+            <summary>
+            Extension methods for fluent mapping API.
+            </summary>
+        </member>
+        <member name="M:Fox.MapKit.MapperExtensions.MapFrom``2(``1,``0)">
+            <summary>
+            Maps properties from source to this target instance (fluent API).
+            Updates target object in-place instead of creating new instance.
+            </summary>
+            <typeparam name="TSource">Source type to map from.</typeparam>
+            <typeparam name="TTarget">Target type to map to (must be reference type).</typeparam>
+            <param name="target">Existing target object to update.</param>
+            <param name="source">Source object to map from.</param>
+            <returns>Updated target object (same reference) for method chaining.</returns>
+            <exception cref="T:System.ArgumentNullException">Thrown when source or target is null.</exception>
+            <exception cref="T:System.InvalidOperationException">Thrown when no mapping is defined for the type pair.</exception>
+            <example>
+            <code>
+            var entity = dbContext.Tasks.Find(id);
+            entity.MapFrom(dto); // Updates entity in-place
+            await dbContext.SaveChangesAsync(); // EF Core detects changes
+            </code>
+            </example>
+        </member>
+        <member name="T:Fox.MapKit.MapProfile">
+            <summary>
+            Base class for mapping profiles. Inherit from this to define compile-time mappings.
+            This class exists only at compile-time and is processed by the source generator.
+            </summary>
+        </member>
+        <member name="M:Fox.MapKit.MapProfile.Configure(Fox.MapKit.IMapConfig)">
+            <summary>
+            Override this method to configure mappings.
+            </summary>
+            <param name="config">Configuration builder</param>
+        </member>
+        <member name="T:Fox.MapKit.MapProfileAttribute">
+            <summary>
+            Marks a MapProfile class for source generator discovery.
+            Apply this attribute to classes inheriting from MapProfile.
+            </summary>
+        </member>
+        <member name="T:Fox.MapKit.ProjectionCache`2">
+            <summary>
+            Cache for projection expressions used by IQueryable projection (EF Core support).
+            </summary>
+            <typeparam name="TSource">Source entity type.</typeparam>
+            <typeparam name="TTarget">Target DTO type.</typeparam>
+        </member>
+        <member name="M:Fox.MapKit.ProjectionCache`2.SetProjection(System.Linq.Expressions.Expression{System.Func{`0,`1}})">
+            <summary>
+            Sets the projection expression for TSource to TTarget mapping.
+            Called by generated code (ModuleInitializer) to register projection.
+            </summary>
+            <param name="projectionExpression">Expression tree for mapping TSource to TTarget.</param>
+        </member>
+        <member name="M:Fox.MapKit.ProjectionCache`2.GetProjection">
+            <summary>
+            Gets the registered projection expression for TSource to TTarget mapping.
+            Returns null if no projection is registered.
+            </summary>
+            <returns>Projection expression or null if not registered.</returns>
+        </member>
+        <member name="T:Fox.MapKit.TypeConverterRegistry">
+            <summary>
+            Registry for custom type converters used in mappings.
+            </summary>
+        </member>
+        <member name="M:Fox.MapKit.TypeConverterRegistry.RegisterGlobalConverter``2(System.Func{``0,Fox.MapKit.IMapContext,``1})">
+            <summary>
+            Registers a global type converter available to all mappings.
+            </summary>
+            <typeparam name="TSource">Source type.</typeparam>
+            <typeparam name="TTarget">Target type.</typeparam>
+            <param name="converter">Converter function.</param>
+        </member>
+        <member name="M:Fox.MapKit.TypeConverterRegistry.RegisterProfileConverter``2(System.String,System.Func{``0,Fox.MapKit.IMapContext,``1})">
+            <summary>
+            Registers a profile-specific type converter.
+            </summary>
+            <typeparam name="TSource">Source type.</typeparam>
+            <typeparam name="TTarget">Target type.</typeparam>
+            <param name="profileName">Profile name (fully qualified type name).</param>
+            <param name="converter">Converter function.</param>
+        </member>
+        <member name="M:Fox.MapKit.TypeConverterRegistry.GetConverter``2(System.String)">
+            <summary>
+            Gets a converter for the specified type pair (checks profile-specific first, then global).
+            </summary>
+            <typeparam name="TSource">Source type.</typeparam>
+            <typeparam name="TTarget">Target type.</typeparam>
+            <param name="profileName">Optional profile name.</param>
+            <returns>Converter function if found, null otherwise.</returns>
+        </member>
+        <member name="M:Fox.MapKit.TypeConverterRegistry.HasConverter(System.Type,System.Type,System.String)">
+            <summary>
+            Checks if a converter exists for the specified type pair.
+            </summary>
+            <param name="sourceType">Source type.</param>
+            <param name="targetType">Target type.</param>
+            <param name="profileName">Optional profile name.</param>
+            <returns>True if converter exists, false otherwise.</returns>
+        </member>
+        <member name="M:Fox.MapKit.TypeConverterRegistry.Clear">
+            <summary>
+            Clears all registered converters (useful for testing).
+            </summary>
+        </member>
+        <member name="T:Fox.MapKit.Validation.ValidationError">
+            <summary>
+            Represents a validation error discovered during runtime mapping validation.
+            </summary>
+        </member>
+        <member name="P:Fox.MapKit.Validation.ValidationError.Message">
+            <summary>
+            Gets the error message.
+            </summary>
+        </member>
+        <member name="P:Fox.MapKit.Validation.ValidationError.ErrorType">
+            <summary>
+            Gets the type of validation error.
+            </summary>
+        </member>
+        <member name="P:Fox.MapKit.Validation.ValidationError.SourceType">
+            <summary>
+            Gets the source type name.
+            </summary>
+        </member>
+        <member name="P:Fox.MapKit.Validation.ValidationError.TargetType">
+            <summary>
+            Gets the target type name.
+            </summary>
+        </member>
+        <member name="M:Fox.MapKit.Validation.ValidationError.#ctor(System.String,Fox.MapKit.Validation.ValidationErrorType,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the ValidationError class.
+            </summary>
+            <param name="message">Error message describing the validation failure.</param>
+            <param name="errorType">Type of validation error.</param>
+            <param name="sourceType">Optional source type name involved in the error.</param>
+            <param name="targetType">Optional target type name involved in the error.</param>
+        </member>
+        <member name="M:Fox.MapKit.Validation.ValidationError.ToString">
+            <summary>
+            Returns a string representation of the validation error.
+            </summary>
+            <returns>Formatted error message including error type and source/target types if available.</returns>
+        </member>
+        <member name="T:Fox.MapKit.Validation.ValidationErrorType">
+            <summary>
+            Type of validation error.
+            </summary>
+        </member>
+        <member name="F:Fox.MapKit.Validation.ValidationErrorType.MissingMapper">
+            <summary>
+            No mapper registered for the specified source and target types.
+            </summary>
+        </member>
+        <member name="F:Fox.MapKit.Validation.ValidationErrorType.MissingNestedMapper">
+            <summary>
+            Nested mapping requires a mapper that is not registered.
+            </summary>
+        </member>
+        <member name="F:Fox.MapKit.Validation.ValidationErrorType.MissingCollectionElementMapper">
+            <summary>
+            Collection element mapper is not registered.
+            </summary>
+        </member>
+        <member name="T:Fox.MapKit.Validation.ValidationResult">
+            <summary>
+            Result of runtime mapping validation.
+            </summary>
+            <remarks>
+            Initializes a new instance of the ValidationResult class.
+            </remarks>
+        </member>
+        <member name="M:Fox.MapKit.Validation.ValidationResult.#ctor(System.Collections.Generic.IEnumerable{Fox.MapKit.Validation.ValidationError})">
+            <summary>
+            Result of runtime mapping validation.
+            </summary>
+            <remarks>
+            Initializes a new instance of the ValidationResult class.
+            </remarks>
+        </member>
+        <member name="P:Fox.MapKit.Validation.ValidationResult.Errors">
+            <summary>
+            Gets the list of validation errors.
+            </summary>
+        </member>
+        <member name="P:Fox.MapKit.Validation.ValidationResult.IsValid">
+            <summary>
+            Gets a value indicating whether the validation was successful (no errors).
+            </summary>
+        </member>
+        <member name="P:Fox.MapKit.Validation.ValidationResult.HasCriticalErrors">
+            <summary>
+            Gets a value indicating whether there are critical errors (missing mappers).
+            </summary>
+        </member>
+        <member name="P:Fox.MapKit.Validation.ValidationResult.MissingMapperCount">
+            <summary>
+            Gets the count of missing mapper errors.
+            </summary>
+        </member>
+        <member name="P:Fox.MapKit.Validation.ValidationResult.MissingNestedMapperCount">
+            <summary>
+            Gets the count of missing nested mapper errors.
+            </summary>
+        </member>
+        <member name="M:Fox.MapKit.Validation.ValidationResult.ToString">
+            <summary>
+            Returns a string representation of the validation result.
+            </summary>
+        </member>
+        <member name="M:Fox.MapKit.Validation.ValidationResult.Success">
+            <summary>
+            Creates a successful validation result.
+            </summary>
+            <returns>Validation result with no errors.</returns>
+        </member>
+        <member name="M:Fox.MapKit.Validation.ValidationResult.ThrowIfInvalid">
+            <summary>
+            Throws an exception if validation failed.
+            </summary>
+        </member>
+    </members>
+</doc>

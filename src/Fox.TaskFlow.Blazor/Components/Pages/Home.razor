@@ -1,0 +1,182 @@
+@page "/"
+
+<PageTitle>Home - Fox.TaskFlow</PageTitle>
+
+<div class="home-container">
+    <div class="hero">
+        <h1>Welcome to Fox.TaskFlow</h1>
+        <p class="subtitle">A modern task management system showcasing Fox.*Kit integration</p>
+        <a href="/tasks" class="btn btn-primary btn-large">
+            View Tasks →
+        </a>
+    </div>
+
+    <div class="features">
+        <h2>Features & Technologies</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <h3>🎯 ResultKit</h3>
+                <p>Railway Oriented Programming for error handling</p>
+            </div>
+            <div class="feature-card">
+                <h3>✅ ValidationKit</h3>
+                <p>Fluent validation for all requests</p>
+            </div>
+            <div class="feature-card">
+                <h3>🔗 ChainKit</h3>
+                <p>Composable workflow transitions</p>
+            </div>
+            <div class="feature-card">
+                <h3>🗺️ MapKit</h3>
+                <p>Compile-time mapping between layers</p>
+            </div>
+            <div class="feature-card">
+                <h3>⚙️ ConfigKit</h3>
+                <p>Type-safe configuration management</p>
+            </div>
+            <div class="feature-card">
+                <h3>🔄 RetryKit</h3>
+                <p>Resilient webhook notifications</p>
+            </div>
+            <div class="feature-card">
+                <h3>📦 OptionKit</h3>
+                <p>Optional fields with type safety</p>
+            </div>
+            <div class="feature-card">
+                <h3>🏛️ Clean Architecture</h3>
+                <p>Domain, Application, Infrastructure layers</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="architecture">
+        <h2>Architecture</h2>
+        <ul>
+            <li><strong>Domain Layer:</strong> Core business entities and workflows</li>
+            <li><strong>Application Layer:</strong> Services, DTOs, and validators with ResultKit</li>
+            <li><strong>Infrastructure Layer:</strong> EF Core with SQLite, repositories, services</li>
+            <li><strong>API Layer:</strong> RESTful endpoints with ResultKit responses</li>
+            <li><strong>Blazor UI:</strong> Interactive task management interface</li>
+        </ul>
+    </div>
+</div>
+
+<style>
+    .home-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .hero {
+        text-align: center;
+        padding: 4rem 2rem;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 12px;
+        margin-bottom: 3rem;
+    }
+
+    .hero h1 {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+
+    .subtitle {
+        font-size: 1.25rem;
+        margin-bottom: 2rem;
+        opacity: 0.9;
+    }
+
+    .btn-large {
+        padding: 1rem 2rem;
+        font-size: 1.125rem;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        border: none;
+        border-radius: 6px;
+        text-decoration: none;
+        cursor: pointer;
+        font-weight: 500;
+        transition: transform 0.2s;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .btn-primary {
+        background: white;
+        color: #667eea;
+    }
+
+    .features {
+        margin-bottom: 3rem;
+    }
+
+    .features h2 {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 2rem;
+    }
+
+    .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .feature-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .feature-card h3 {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        font-size: 1.25rem;
+        color: #667eea;
+    }
+
+    .feature-card p {
+        margin: 0;
+        color: #666;
+    }
+
+    .architecture {
+        background: white;
+        padding: 2rem;
+        border-radius: 8px;
+        border: 1px solid #e0e0e0;
+    }
+
+    .architecture h2 {
+        margin-top: 0;
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .architecture ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .architecture li {
+        padding: 0.75rem 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .architecture li:last-child {
+        border-bottom: none;
+    }
+
+    .architecture strong {
+        color: #667eea;
+    }
+</style>

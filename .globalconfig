@@ -1,0 +1,47 @@
+is_global = true
+
+#==================================================================================================
+# .NET Code Analysis Rules
+# Microsoft.CodeAnalysis.NetAnalyzers only - no StyleCop
+#==================================================================================================
+
+# CA1303: Do not pass literals as localized parameters
+# Hungarian documentation is acceptable, no localization needed
+dotnet_diagnostic.CA1303.severity = none
+
+# CA1062: Validate arguments of public methods
+# Suggestion level - nullable reference types handle most cases
+dotnet_diagnostic.CA1062.severity = suggestion
+
+# CA1031: Do not catch general exception types
+# Suggestion level - sometimes broad catch is intentional (e.g., Try methods)
+dotnet_diagnostic.CA1031.severity = suggestion
+
+# CA2007: Do not directly await a Task (ConfigureAwait)
+# Not needed in modern .NET (library code defaults are fine)
+dotnet_diagnostic.CA2007.severity = none
+
+# CA1822: Mark members as static
+# Suggestion level - not always desirable for API design
+dotnet_diagnostic.CA1822.severity = suggestion
+
+# CA1716: Identifiers should not match keywords
+# Suggestion level - "Result" and "Error" are acceptable despite being keywords in some languages
+dotnet_diagnostic.CA1716.severity = suggestion
+
+#==================================================================================================
+# IDE Code Style Rules
+#==================================================================================================
+
+# IDE0055: Fix formatting
+# EditorConfig handles formatting
+dotnet_diagnostic.IDE0055.severity = warning
+
+# IDE0005: Remove unnecessary usings
+dotnet_diagnostic.IDE0005.severity = warning
+
+# IDE0051: Remove unused private members
+dotnet_diagnostic.IDE0051.severity = warning
+
+# IDE0052: Remove unread private members
+dotnet_diagnostic.IDE0052.severity = warning

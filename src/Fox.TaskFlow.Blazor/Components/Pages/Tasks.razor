@@ -1,0 +1,406 @@
+@page "/tasks"
+@rendermode InteractiveServer
+@inject TaskService TaskService
+@inject NavigationManager Navigation
+
+<PageTitle>Tasks - Fox.TaskFlow</PageTitle>
+
+<div class="container">
+    <div class="header">
+        <h1>Task Management</h1>
+        <button class="btn btn-primary" @onclick="NavigateToCreate">
+            + Create New Task
+        </button>
+    </div>
+
+    <div class="filter-panel">
+        <div class="filter-header" @onclick="ToggleFilters">
+            <h3>🔍 Filters</h3>
+            <span class="toggle-icon">@(showFilters ? "▲" : "▼")</span>
+        </div>
+        @if (showFilters)
+        {
+            <div class="filter-content">
+                <div class="filter-row">
+                    <div class="filter-field">
+                        <label>Search Title:</label>
+                        <input type="text" @bind="searchTitle" placeholder="Search by title..." class="form-input" />
+                    </div>
+                    <div class="filter-field">
+                        <label>Status:</label>
+                        <select @bind="filterStatus" class="form-input">
+                            <option value="">All</option>
+                            <option value="0">Created</option>
+                            <option value="1">InProgress</option>
+                            <option value="2">Completed</option>
+                            <option value="3">Cancelled</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-field">
+                        <label>Due After:</label>
+                        <input type="date" @bind="dueAfter" class="form-input" />
+                    </div>
+                    <div class="filter-field">
+                        <label>Due Before:</label>
+                        <input type="date" @bind="dueBefore" class="form-input" />
+                    </div>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-field">
+                        <label>
+                            <input type="checkbox" @bind="showCompleted" />
+                            Show Completed Tasks
+                        </label>
+                    </div>
+                </div>
+                <div class="filter-actions">
+                    <button class="btn btn-primary btn-sm" @onclick="ApplyFilters">Apply Filters</button>
+                    <button class="btn btn-secondary btn-sm" @onclick="ClearFilters">Clear Filters</button>
+                </div>
+            </div>
+        }
+    </div>
+
+    @if (errorMessage != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @errorMessage
+        </div>
+    }
+
+    @if (tasks == null)
+    {
+        <p><em>Loading...</em></p>
+    }
+    else if (tasks.Count == 0)
+    {
+        <p><em>No tasks found. @(isFiltering ? "Try adjusting your filters." : "Create your first task!")</em></p>
+    }
+    else
+    {
+        <div class="task-info">
+            <p>Showing @tasks.Count task(s) @(isFiltering ? "(filtered)" : "")</p>
+        </div>
+        <div class="task-grid">
+            @foreach (var task in tasks)
+            {
+                <div class="task-card task-status-@task.Status.ToString().ToLower()">
+                    <div class="task-header">
+                        <h3>@task.Title</h3>
+                        <span class="task-status">@task.Status</span>
+                    </div>
+                    <p class="task-description">@task.Description</p>
+                    <div class="task-meta">
+                        <span>Created: @task.CreatedAt.ToString("yyyy-MM-dd")</span>
+                        @if (task.DueDate.HasValue)
+                        {
+                            <span>Due: @task.DueDate.Value.ToString("yyyy-MM-dd")</span>
+                        }
+                    </div>
+                    <div class="task-actions">
+                        <button class="btn btn-sm btn-secondary" @onclick="() => NavigateToDetail(task.Id)">
+                            View Details
+                        </button>
+                        <button class="btn btn-sm btn-danger" @onclick="() => DeleteTask(task.Id)">
+                            Delete
+                        </button>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private List<TaskDto>? tasks;
+    private string? errorMessage;
+    private bool showFilters = false;
+    private bool isFiltering = false;
+
+    private string? searchTitle;
+    private string? filterStatus;
+    private DateTime? dueAfter;
+    private DateTime? dueBefore;
+    private bool showCompleted = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadTasks();
+    }
+
+    private async Task LoadTasks()
+    {
+        try
+        {
+            tasks = await TaskService.GetAllTasksAsync();
+            errorMessage = null;
+            isFiltering = false;
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Failed to load tasks: {ex.Message}";
+        }
+    }
+
+    private void ToggleFilters()
+    {
+        showFilters = !showFilters;
+    }
+
+    private async Task ApplyFilters()
+    {
+        try
+        {
+            int? statusValue = !string.IsNullOrEmpty(filterStatus) ? int.Parse(filterStatus) : null;
+            var result = await TaskService.GetFilteredTasksAsync(searchTitle, statusValue, dueBefore, dueAfter, showCompleted);
+            tasks = result.Tasks;
+            errorMessage = null;
+            isFiltering = true;
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Failed to apply filters: {ex.Message}";
+        }
+    }
+
+    private async Task ClearFilters()
+    {
+        searchTitle = null;
+        filterStatus = null;
+        dueAfter = null;
+        dueBefore = null;
+        showCompleted = true;
+        await LoadTasks();
+    }
+
+    private void NavigateToCreate()
+    {
+        Navigation.NavigateTo("/tasks/create");
+    }
+
+    private void NavigateToDetail(Guid id)
+    {
+        Navigation.NavigateTo($"/tasks/{id}");
+    }
+
+    private async Task DeleteTask(Guid id)
+    {
+        try
+        {
+            await TaskService.DeleteTaskAsync(id);
+            if (isFiltering)
+            {
+                await ApplyFilters();
+            }
+            else
+            {
+                await LoadTasks();
+            }
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Failed to delete task: {ex.Message}";
+        }
+    }
+}
+
+<style>
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .task-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .task-card {
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 1.5rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .task-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: start;
+        margin-bottom: 1rem;
+    }
+
+    .task-header h3 {
+        margin: 0;
+        font-size: 1.25rem;
+    }
+
+    .task-status {
+        padding: 0.25rem 0.75rem;
+        border-radius: 12px;
+        font-size: 0.875rem;
+        font-weight: 600;
+    }
+
+    .task-status-created .task-status {
+        background: #e3f2fd;
+        color: #1976d2;
+    }
+
+    .task-status-inprogress .task-status {
+        background: #fff3e0;
+        color: #f57c00;
+    }
+
+    .task-status-completed .task-status {
+        background: #e8f5e9;
+        color: #388e3c;
+    }
+
+    .task-status-cancelled .task-status {
+        background: #fce4ec;
+        color: #c2185b;
+    }
+
+    .task-description {
+        color: #666;
+        margin-bottom: 1rem;
+    }
+
+    .task-meta {
+        display: flex;
+        gap: 1rem;
+        font-size: 0.875rem;
+        color: #999;
+        margin-top: auto;
+        margin-bottom: 1rem;
+    }
+
+    .task-actions {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .btn {
+        padding: 0.5rem 1rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: 500;
+    }
+
+    .btn-primary {
+        background: #1976d2;
+        color: white;
+    }
+
+    .btn-secondary {
+        background: #757575;
+        color: white;
+    }
+
+    .btn-danger {
+        background: #d32f2f;
+        color: white;
+    }
+
+    .btn-sm {
+        padding: 0.375rem 0.75rem;
+        font-size: 0.875rem;
+    }
+
+    .alert {
+        padding: 1rem;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+    }
+
+    .alert-danger {
+        background: #ffebee;
+        color: #c62828;
+        border: 1px solid #ef9a9a;
+    }
+
+    .filter-panel {
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .filter-header {
+        padding: 1rem 1.5rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        user-select: none;
+    }
+
+    .filter-header h3 {
+        margin: 0;
+        font-size: 1.125rem;
+    }
+
+    .toggle-icon {
+        font-size: 0.875rem;
+        color: #757575;
+    }
+
+    .filter-content {
+        padding: 0 1.5rem 1.5rem;
+        border-top: 1px solid #eee;
+    }
+
+    .filter-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+        margin-top: 1rem;
+    }
+
+    .filter-field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .filter-field label {
+        font-weight: 500;
+        font-size: 0.875rem;
+        color: #555;
+    }
+
+    .form-input {
+        padding: 0.5rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 1rem;
+    }
+
+    .filter-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .task-info {
+        margin-bottom: 1rem;
+        color: #757575;
+        font-size: 0.875rem;
+    }
+</style>

@@ -1,0 +1,27 @@
+# Code Owners for Fox.TaskFlow
+# These users will be automatically requested for review when someone opens a pull request.
+# See: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Global owner for everything in the repository
+* @akikari
+
+# Source projects
+/src/ @akikari
+
+# Tests
+/tests/ @akikari
+
+# Documentation
+/README.md @akikari
+/CHANGELOG.md @akikari
+/CONTRIBUTING.md @akikari
+/CREDITS @akikari
+/NOTICE @akikari
+/.github/ @akikari
+
+# Build configuration
+*.csproj @akikari
+*.slnx @akikari
+
+# GitHub workflows (require extra scrutiny)
+/.github/workflows/ @akikari

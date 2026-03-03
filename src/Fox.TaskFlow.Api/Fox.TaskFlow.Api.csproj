@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Version>1.0.0</Version>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Converters\**" />
+    <Content Remove="Converters\**" />
+    <EmbeddedResource Remove="Converters\**" />
+    <None Remove="Converters\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Fox.ResultKit" Version="1.3.0" />
+    <PackageReference Include="Fox.OptionKit" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.3" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Fox.TaskFlow.Application\Fox.TaskFlow.Application.csproj" />
+    <ProjectReference Include="..\Fox.TaskFlow.Domain\Fox.TaskFlow.Domain.csproj" />
+    <ProjectReference Include="..\Fox.TaskFlow.Infrastructure\Fox.TaskFlow.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\..\Fox.ConfigKit\src\Fox.ConfigKit\Fox.ConfigKit.csproj" />
+    <ProjectReference Include="..\..\..\Fox.ConfigKit\src\Fox.ConfigKit.ResultKit\Fox.ConfigKit.ResultKit.csproj" />
+  </ItemGroup>
+
+</Project>

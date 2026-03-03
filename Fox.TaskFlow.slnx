@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Fox.TaskFlow.Api/Fox.TaskFlow.Api.csproj" Id="369acd00-cce0-47f1-8154-ac791b8e632d" />
+    <Project Path="src/Fox.TaskFlow.Application/Fox.TaskFlow.Application.csproj" Id="b200ccf4-d511-44db-9018-95bd12ab755b" />
+    <Project Path="src/Fox.TaskFlow.Blazor/Fox.TaskFlow.Blazor.csproj" Id="c79411bb-bf8c-4781-8796-3334a71fb4e4" />
+    <Project Path="src/Fox.TaskFlow.Domain/Fox.TaskFlow.Domain.csproj" Id="b65f5868-4b63-4aad-86d2-d807b2c62f6c" />
+    <Project Path="src/Fox.TaskFlow.Infrastructure/Fox.TaskFlow.Infrastructure.csproj" Id="da126eed-29dc-43a6-94c3-9afb5410629c" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Fox.TaskFlow.Tests/Fox.TaskFlow.Tests.csproj" Id="fcea54cc-dc41-4087-a2ed-58ad44676015" />
+  </Folder>
+</Solution>

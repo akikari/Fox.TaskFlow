@@ -1,0 +1,187 @@
+@baseUrl = https://localhost:7144
+@taskId = 00000000-0000-0000-0000-000000000001
+
+### Get all tasks (English)
+GET {{baseUrl}}/api/tasks
+Accept: application/json
+Accept-Language: en
+
+### Get all tasks (Hungarian)
+GET {{baseUrl}}/api/tasks
+Accept: application/json
+Accept-Language: hu
+
+### Get task by ID (English)
+GET {{baseUrl}}/api/tasks/{{taskId}}
+Accept: application/json
+Accept-Language: en
+
+### Get task by ID (Hungarian)
+GET {{baseUrl}}/api/tasks/{{taskId}}
+Accept: application/json
+Accept-Language: hu
+
+### Get filtered tasks - Search by title (English)
+GET {{baseUrl}}/api/tasks/filter?searchTitle=feature
+Accept: application/json
+Accept-Language: en
+
+### Get filtered tasks - Filter by status InProgress (English)
+GET {{baseUrl}}/api/tasks/filter?status=1
+Accept: application/json
+Accept-Language: en
+
+### Get filtered tasks - Due before date (English)
+GET {{baseUrl}}/api/tasks/filter?dueBefore=2026-12-31
+Accept: application/json
+Accept-Language: en
+
+### Get filtered tasks - Due after date (English)
+GET {{baseUrl}}/api/tasks/filter?dueAfter=2026-01-01
+Accept: application/json
+Accept-Language: en
+
+### Get filtered tasks - Hide completed tasks (English)
+GET {{baseUrl}}/api/tasks/filter?showCompleted=false
+Accept: application/json
+Accept-Language: en
+
+### Get filtered tasks - Multiple filters combined (English)
+GET {{baseUrl}}/api/tasks/filter?searchTitle=auth&status=1&dueBefore=2026-12-31&showCompleted=false
+Accept: application/json
+Accept-Language: en
+
+### Get filtered tasks - Multiple filters combined (Hungarian)
+GET {{baseUrl}}/api/tasks/filter?searchTitle=funkció&status=1&dueBefore=2026-12-31
+Accept: application/json
+Accept-Language: hu
+
+### Create task - Valid (English)
+POST {{baseUrl}}/api/tasks
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "title": "Implement new feature",
+  "description": "Add support for task prioritization feature",
+  "dueDate": "2026-04-15"
+}
+
+### Create task - Valid (Hungarian)
+POST {{baseUrl}}/api/tasks
+Content-Type: application/json
+Accept-Language: hu
+
+{
+  "title": "Új funkció implementálása",
+  "description": "Task prioritás támogatás hozzáadása a rendszerhez",
+  "dueDate": "2026-04-20"
+}
+
+### Create task - Invalid (Empty Title - English)
+POST {{baseUrl}}/api/tasks
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "title": "",
+  "description": "This should fail validation",
+  "dueDate": null
+}
+
+### Create task - Invalid (Empty Title - Hungarian)
+POST {{baseUrl}}/api/tasks
+Content-Type: application/json
+Accept-Language: hu
+
+{
+  "title": "",
+  "description": "Ez validációs hibát okoz",
+  "dueDate": null
+}
+
+### Create task - Invalid (Too Short Description - Hungarian)
+POST {{baseUrl}}/api/tasks
+Content-Type: application/json
+Accept-Language: hu
+
+{
+  "title": "Valid Title",
+  "description": "Short",
+  "dueDate": null
+}
+
+### Create task - Invalid (Past Due Date - English)
+POST {{baseUrl}}/api/tasks
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "title": "Valid Title",
+  "description": "Valid description with enough characters to pass validation",
+  "dueDate": "2020-01-01"
+}
+
+### Update task - Valid (English)
+PUT {{baseUrl}}/api/tasks/{{taskId}}
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "title": "Updated Task Title",
+  "description": "This task has been updated with new information",
+  "dueDate": "2026-05-01"
+}
+
+### Update task - Valid (Hungarian)
+PUT {{baseUrl}}/api/tasks/{{taskId}}
+Content-Type: application/json
+Accept-Language: hu
+
+{
+  "title": "Frissített Task Cím",
+  "description": "Ez a task új információkkal lett frissítve most",
+  "dueDate": "2026-05-10"
+}
+
+### Update task - Invalid (Too Short Title - Hungarian)
+PUT {{baseUrl}}/api/tasks/{{taskId}}
+Content-Type: application/json
+Accept-Language: hu
+
+{
+  "title": "AB",
+  "description": "Valid description here with enough characters",
+  "dueDate": null
+}
+
+### Transition task - Created to InProgress (English)
+POST {{baseUrl}}/api/tasks/{{taskId}}/transition
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "targetStatus": 1
+}
+
+### Transition task - InProgress to Completed (English)
+POST {{baseUrl}}/api/tasks/{{taskId}}/transition
+Content-Type: application/json
+Accept-Language: en
+
+{
+  "targetStatus": 2
+}
+
+### Transition task - Invalid (Completed to InProgress - Hungarian)
+POST {{baseUrl}}/api/tasks/{{taskId}}/transition
+Content-Type: application/json
+Accept-Language: hu
+
+{
+  "targetStatus": 1
+}
+
+### Delete task
+DELETE {{baseUrl}}/api/tasks/{{taskId}}
+Accept-Language: en
