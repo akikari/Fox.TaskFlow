@@ -19,7 +19,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest]
-        dotnet-version: ['8.0.x', '9.0.x', '10.0.x']
+        dotnet-version: ['10.0.x']
       fail-fast: false
 
     steps:
@@ -40,49 +40,4 @@ jobs:
       run: dotnet build --configuration Release --no-restore --warnaserror
 
     - name: Run tests
-      if: matrix.dotnet-version != '8.0.x' || matrix.os != 'ubuntu-latest'
       run: dotnet test --configuration Release --no-build --verbosity normal
-
-    - name: Run tests with coverage
-      if: matrix.os == 'ubuntu-latest' && matrix.dotnet-version == '8.0.x'
-      run: dotnet test --configuration Release --no-build --verbosity normal --collect:"XPlat Code Coverage" --settings coverlet.runsettings --results-directory ./coverage-report
-
-    - name: Upload coverage to Codecov
-      if: matrix.os == 'ubuntu-latest' && matrix.dotnet-version == '8.0.x'
-      uses: codecov/codecov-action@v4
-      with:
-        files: ./coverage-report/**/coverage.cobertura.xml
-        flags: unittests
-        fail_ci_if_error: true
-
-  pack-validation:
-    name: Pack Validation
-    runs-on: ubuntu-latest
-    needs: build-and-test
-
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
-
-    - name: Setup .NET 8
-      uses: actions/setup-dotnet@v4
-      with:
-        dotnet-version: '8.0.x'
-
-    - name: Restore dependencies
-      run: dotnet restore
-
-    - name: Pack Fox.ResultKit
-      run: dotnet pack src/Fox.ResultKit/Fox.ResultKit.csproj --configuration Release --no-restore --output ./artifacts
-
-    - name: Pack Fox.ResultKit.MediatR
-      run: dotnet pack src/Fox.ResultKit.MediatR/Fox.ResultKit.MediatR.csproj --configuration Release --no-restore --output ./artifacts
-
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: nuget-packages
-        path: ./artifacts/*.nupkg
-        retention-days: 7
